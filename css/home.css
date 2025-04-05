@@ -19,3 +19,51 @@
 .sjb-navbar {
   animation: fadeInAnimation 1s ease-in-out;
 }
+
+.school-background {
+  background-image: url("SJB-BG.png");
+  background-repeat: no-repeat;
+  background-size: cover; /* Ensures the image fully covers the container */
+  background-position: center; /* Centers the image */
+  min-height: 50vh; /* Makes the background fill the whole screen */
+  width: 100%;
+  position: relative; /* Needed for overlay */
+  overflow: hidden; /* Prevents any unwanted scrolling */
+  color: white;
+}
+
+.school-background h1,
+.school-background p {
+  position: relative;
+  z-index: 2; /* Places text above the overlay */
+  color: white; /* Ensures text is white */
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* Adds readability */
+}
+
+/* Optional: Add an overlay for readability */
+.school-background::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* Dark overlay */
+  background: rgba(0, 0, 0, 0.1); /* Adjust darkness */
+
+  /* Vignette effect */
+  background: radial-gradient(
+    circle,
+    rgba(0, 0, 0, 0.4) 20%,
+    rgba(0, 0, 0, 0.7) 100%
+  );
+  z-index: 1;
+}
+
+.school-announcement {
+  background-image: url("enrollment-2025.jpg");
+  background-repeat: no-repeat;
+  background-size: contain; /* Ensures the image fully covers the container */
+  background-position: center; /* Centers the image */
+  min-height: 100vh; /* Makes the background fill the whole screen */
+}

@@ -11,13 +11,15 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Madimi+One&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/home.css">
+    <!----AOS LIBRARY---->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
 
 <body>
 
     <div class="main-container">
 
-        <nav class="navbar navbar-expand-lg sjb-navbar">
+        <nav class="navbar navbar-expand-lg sjb-navbar" data-aos="fade-up">
             <div class="container-fluid">
                 <a class="navbar-brand" href="index.php">
                     <img src="css/sjb-logo.png" alt="" width="40px" height="40px">
@@ -37,16 +39,37 @@
                             <a class="nav-link" href="#">Programs</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link">Contact Us</a>
+                            <a class="nav-link" href="#">Contact Us</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href=""><button >Login</button></a>
+                            <a class="nav-link" href="#"><button>Login</button></a>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
+
+        <section data-aos="fade-right" class="container-fluid school-background">
+            <h1>Welcome to Saint John Bosco</h1>
+        </section>
+
+        <section data-aos="fade-up" class="container-fluid school-announcement">
+            <h1> </h1>
+        </section>
+
     </div>
+
+    <!-- AOS JS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            offset: 500, // Start animation 100px before the section is in view
+            duration: 1000, // Animation duration in milliseconds
+            easing: 'ease-in-out', // Smooth transition effect
+        });
+    </script>
+
+
 
 </body>
 

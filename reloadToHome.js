@@ -1,7 +1,7 @@
 // JavaScript function to redirect to login.php after 3 seconds
 function redirectToHome() {
   setTimeout(function () {
-    window.location.href = "home.php";
+    window.location.href = "home.html";
   }, 3000); // 1000 milliseconds = 1 second
 }
 

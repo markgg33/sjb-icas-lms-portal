@@ -19,16 +19,16 @@
 
     <div class="main-container">
 
-        <nav class="navbar navbar-expand-lg sjb-navbar" data-aos="fade-up">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="index.php">
+        <nav class="navbar navbar-expand-lg sjb-navbar">
+            <div class="container-lg">
+                <a class="navbar-brand" href="home.html">
                     <img src="css/sjb-logo.png" alt="" width="40px" height="40px">
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto">
+                    <ul class="navbar-nav ms-auto align-items-center">
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="#">Home</a>
                         </li>
@@ -41,20 +41,29 @@
                         <li class="nav-item">
                             <a class="nav-link" href="#">Contact Us</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#"><button>Login</button></a>
+                        <li class="nav-item nav-item">
+                            <a class="nav-link" href="#"><button class="btn-login">Login</button></a>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
 
-        <section data-aos="fade-right" class="container-fluid school-background">
-            <h1>Welcome to Saint John Bosco</h1>
+        <section data-aos="fade-right" class="container-fluid school-background text-center text-sm-start">
+            <div>
+                <h1 data-aos="fade-right">Welcome to Saint John Bosco</h1>
+                <p data-aos="fade-left">"At SJB, you are a student, a friend, and a family"
+                    <br>Inquire now for your desired program
+                </p>
+                <button data-aos="fade-in" class="btn-enroll">Enroll now</button>
+            </div> 
+            <img src="css/sjb-logo.png" alt="" class="img d-sm-flex d-none">
+            
+            
         </section>
 
         <section data-aos="fade-up" class="container-fluid school-announcement">
-            <h1> </h1>
+           
         </section>
 
     </div>
@@ -63,8 +72,8 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         AOS.init({
-            offset: 500, // Start animation 100px before the section is in view
-            duration: 1000, // Animation duration in milliseconds
+            offset: 100, // Start animation 100px before the section is in view
+            duration: 1200, // Animation duration in milliseconds
             easing: 'ease-in-out', // Smooth transition effect
         });
     </script>

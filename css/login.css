@@ -1,0 +1,92 @@
+body {
+  margin: 0px;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Open Sans", sans-serif;
+}
+
+.login-page-container {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  justify-content: space-between;
+}
+
+.login-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 50%;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 25px;
+  background-color: rgb(240, 236, 236);
+  border-radius: 10px;
+  width: 100%;
+  max-width: 450px; /* Wider standard form */
+}
+
+.login-form input,
+.login-form .input-group {
+  width: 300px; /* Ensure inputs stretch */
+}
+
+.image-right {
+  background-image: url(SJB-BG.png);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 50%;
+  z-index: 1;
+}
+
+.btn-login {
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: rgb(37, 37, 114);
+  color: white;
+  transition: background-color 100ms;
+}
+
+.btn-login:hover {
+  background-color: rgb(61, 61, 192);
+}
+
+.toggle-password i{
+  cursor: pointer;
+}
+
+/* Responsive design for tablets and phones */
+@media screen and (max-width: 768px) {
+  .login-page-container {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .login-left {
+    width: 100%;
+    height: auto;
+  }
+
+  .image-right {
+    display: none;
+  }
+
+  .login-form {
+    margin: auto;
+  }
+
+  .login-form input,
+  .login-form .input-group {
+    width: 300px; /* Ensure inputs stretch */
+  }
+}

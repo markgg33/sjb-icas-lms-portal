@@ -51,13 +51,13 @@ body {
   border: none;
   padding: 10px;
   border-radius: 5px;
-  background-color: rgb(37, 37, 114);
+  background-color: #1a4197;
   color: white;
   transition: background-color 100ms;
 }
 
 .btn-login:hover {
-  background-color: rgb(61, 61, 192);
+  background-color: rgb(47, 106, 233);
 }
 
 .toggle-password i{

@@ -121,20 +121,21 @@ body {
   justify-content: space-between;
   padding: 0 30px;
   box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.4);
+  color: white;
 }
 
 .btn-items {
   border: none;
   margin-left: 10px;
   background-color: transparent;
-  color: black;
+  color: white;
   padding: 10px 10px;
   border-radius: 5px;
   transition: color 100ms, background-color 100ms;
 }
 
 .btn-items:hover {
-  color: white;
+  color: black;
   background-color: rgb(47, 106, 233);
 }
 

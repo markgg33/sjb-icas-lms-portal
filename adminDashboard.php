@@ -48,7 +48,7 @@
         <aside id="sidebar">
 
             <div class="sidebar-logo">
-                <img src="css/sjb-logo.png" alt="Sidebar Logo of school here" height="100px">
+                <img src="css/sjb-logo.png" alt="Sidebar Logo of school here" height="150px">
             </div>
             <BR></BR>
             <ul class="sidebar-list">

@@ -146,4 +146,45 @@ body {
   margin-top: 16px;
 }
 
+.main-container {
+  grid-area: main;
+  overflow-y: auto;
+  padding: 20px 20px;
+  background-color: #e6e8ed;
+}
 
+.main-title h1{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  font-weight: bold;
+  color: #1a4197;
+}
+
+/*----PAGES----*/
+
+#enrollForm{
+  margin: 50px;
+  background-color: #1a4197;
+  padding: 30px;
+  color: white;
+  font-weight: 400;
+  border-radius: 10px;
+}
+
+.btn-enroll{
+  border: none;
+  padding: 20px;
+  border-radius: 10px;
+  color: white;
+  background-color: #4d7fe9;
+  transition: background-color 200ms;
+}
+
+.btn-enroll:hover{
+  background-color: #548aff;
+}
+
+.btn-enroll i{
+  margin-right: 10px;
+}

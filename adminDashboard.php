@@ -12,6 +12,7 @@
     <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <!---------------------------->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
     <script src="javascripts/sidebar.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Madimi+One&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
@@ -49,7 +50,7 @@
             <div class="sidebar-logo">
                 <img src="css/sjb-logo.png" alt="Sidebar Logo of school here" height="150px">
             </div>
-
+            <BR></BR>
             <ul class="sidebar-list">
                 <!----GENERAL DASHBOARD---->
                 <li>
@@ -93,9 +94,119 @@
                 </li>
 
             </ul>
+            <hr>
         </aside>
-        
+
+        <main class="main-container">
+
+            <!---DASHBOARD PAGE--->
+            <div id="dashboard-page" class="page-content">
+                <div class="main-title">
+                    <h1>DASHBOARD</h1>
+                </div>
+            </div>
+
+            <!---ENROLL STUDENTS PAGE--->
+            <div id="addStudents-page" class="page-content">
+                <div class="main-title">
+                    <h1>ENROLL STUDENTS</h1>
+                </div>
+
+                <form id="enrollForm" enctype="multipart/form-data" method="POST" action="enroll_student.php" data-aos="fade-left">
+                    <div class="row gx-3">
+                        <div class="col">
+                            <label>First Name</label>
+                            <div class="input-group">
+                                <input type="text" name="first_name" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <label>Middle Name</label>
+                            <div class="input-group">
+                                <input type="text" name="middle_name" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <label>Last Name</label>
+                            <div class="input-group">
+                                <input type="text" name="last_name" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="mb-3"></div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col">
+                            <label>Year Level</label>
+                            <select id="year_level" name="year_level" class="form-select" required>
+                                <option value="">Select Year Level</option>
+                                <option value="12">Grade 12</option>
+                                <option value="1">1st Year</option>
+                                <option value="2">2nd Year</option>
+                                <option value="3">3rd Year</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <label>Course</label>
+                            <select id="course" name="course_id" class="form-select" required>
+                                <option value="">Select Course</option>
+                            </select>
+                        </div>
+                        <div class="mb-3"></div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <label>Email</label>
+                            <input type="email" name="email" class="form-control" required>
+                        </div>
+                        <div class="col">
+                            <label>Date of Birth</label>
+                            <input type="date" name="dob" class="form-control" required>
+                        </div>
+                        <div class="mb-3"></div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <label>Password</label>
+                            <input type="password" name="password" class="form-control" required>
+                        </div>
+                        <div class="col">
+                            <label>Confirm Password</label>
+                            <input type="password" name="confirm_password" class="form-control" required>
+                        </div>
+                        <div class="mb-3"></div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <label>Student Photo</label>
+                            <input type="file" name="photo" class="form-control">
+                        </div>
+                        <div class="col">
+
+                        </div>
+                        <div class="mb-3"></div>
+                    </div>
+                    <button type="submit" class="btn-enroll"><i class="fa-solid fa-clipboard-check"></i>Enroll Student</button>
+                </form>
+            </div>
+        </main>
     </div>
+
+    <!-- AOS JS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            offset: 100, // Start animation 100px before the section is in view
+            duration: 800, // Animation duration in milliseconds
+            easing: 'ease-in-out', // Smooth transition effect
+        });
+    </script>
+    <script src="javascripts/togglePassword.js"></script>
+
 
 </body>
 

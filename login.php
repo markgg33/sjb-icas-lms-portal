@@ -1,67 +1,56 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
+session_start();
+include 'config.php'; // DB connection
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Saint John Bosco x Infotech College of Arts and Sciences</title>
-    <script src="https://kit.fontawesome.com/92cde7fc6f.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css" />
-    <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Madimi+One&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/login.css">
-    <!----AOS LIBRARY---->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <title>Document</title>
-</head>
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = $_POST['email'] ?? '';
+    $password = $_POST['password'] ?? '';
+    $user_type = $_POST['user_type'] ?? '';
 
-<body>
-    <div class="login-page-container">
+    if (!$email || !$password || !$user_type) {
+        die("All fields are required.");
+    }
 
-        <div class="login-left" data-aos="fade-right">
-            <div class="login-form">
-                <img src="css/sjb-logo.png" alt="" width="150px">
-                <br>
-                <form action="" >
-                    <!-- Email -->
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Email address</label>
-                        <input type="email" class="form-control">
-                    </div>
-                    <!-- Password -->
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Password</label>
-                        <div class="input-group">
-                            <input type="password" id="password" class="form-control">
-                            <span class="input-group-text toggle-password" onclick="togglePassword('password')">
-                                <i class="fa-solid fa-eye"></i>
-                            </span>
-                        </div>
-                    </div>
-                    <button type="submit" class="btn-login w-100">Login</button>
-                </form>
-                <br>
-                <p>All rights reserved &copy 2025</p>
-            </div>
-        </div>
+    // Determine table based on user_type
+    if ($user_type === 'admin' || $user_type === 'faculty') {
+        $stmt = $conn->prepare("SELECT * FROM users WHERE email = ? AND role = ?");
+        $stmt->bind_param("ss", $email, $user_type);
+    } elseif ($user_type === 'student') {
+        $stmt = $conn->prepare("SELECT * FROM students WHERE email = ?");
+        $stmt->bind_param("s", $email);
+    } else {
+        die("Invalid user type selected.");
+    }
 
-        <div class="image-right" data-aos="fade-left">
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-        </div>
-    </div>
+    if ($result && $result->num_rows === 1) {
+        $user = $result->fetch_assoc();
 
-     <!-- AOS JS -->
-     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>
-        AOS.init({
-            offset: 100, // Start animation 100px before the section is in view
-            duration: 800, // Animation duration in milliseconds
-            easing: 'ease-in-out', // Smooth transition effect
-        });
-    </script>
-    <script src="javascripts/togglePassword.js"></script>
+        if (password_verify($password, $user['password'])) {
+            // Set session
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['user_type'] = $user_type;
+            $_SESSION['email'] = $user['email'];
 
-</body>
+            if ($user_type === 'student') {
+                $_SESSION['name'] = $user['first_name'] . ' ' . $user['last_name'];
+                $_SESSION['student_id'] = $user['id'];
+                header("Location: studentDashboard.php");
+            } elseif ($user_type === 'faculty' || $user_type === 'admin') {
+                // Ensure first_name and last_name are stored in the users table
+                $_SESSION['name'] = $user['first_name'] . ' ' . $user['last_name'];
+                header("Location: " . ($user_type === 'faculty' ? "facultyDashboard.php" : "adminDashboard.php"));
+            }
 
-</html>
+            exit;
+        } else {
+            echo "Invalid password.";
+        }
+    } else {
+        echo "No user found with those credentials.";
+    }
+} else {
+    echo "Invalid request.";
+}

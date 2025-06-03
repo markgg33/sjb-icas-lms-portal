@@ -30,7 +30,7 @@ body {
   background-color: rgb(240, 236, 236);
   border-radius: 10px;
   width: 100%;
-  max-width: 450px; /* Wider standard form */
+  max-width: 430px; /* Wider standard form */
 }
 
 .login-form input,
@@ -60,8 +60,18 @@ body {
   background-color: rgb(47, 106, 233);
 }
 
-.toggle-password i{
+.toggle-password i {
   cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+  color: #1a4197;
+  transition: color 200ms;
+}
+
+a:hover {
+  color: #2967eb;
 }
 
 /* Responsive design for tablets and phones */
@@ -82,11 +92,12 @@ body {
   }
 
   .login-form {
-    margin: auto;
   }
 
   .login-form input,
   .login-form .input-group {
-    width: 300px; /* Ensure inputs stretch */
+    width: 350px; /* Ensure inputs stretch */
   }
 }
+
+

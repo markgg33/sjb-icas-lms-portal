@@ -12,7 +12,7 @@ function debounce(func, wait) {
 $(function () {
   // Ensure DOM ready
 
-  $("#searchStudentBtn").on("click", function () {
+  $("#searchEnrollStudentBtn").on("click", function () {
     const name = $("#studentNameInput").val().trim();
 
     if (name.length < 2) {
@@ -28,6 +28,9 @@ $(function () {
       try {
         const students = JSON.parse(data);
         renderStudentResults(students);
+
+        console.log("Searching for:", name);
+        console.log("Student search results:", students);
 
         // Add delay so overlay is visible
         setTimeout(() => {

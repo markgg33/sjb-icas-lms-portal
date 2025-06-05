@@ -1,7 +1,7 @@
 <?php
 include 'config.php';
 
-$query = "SELECT id, first_name, middle_name, last_name, gender, email, role FROM users ORDER BY last_name";
+$query = "SELECT id, first_name, middle_name, last_name, gender, email, role, photo FROM users ORDER BY last_name";
 $result = $conn->query($query);
 
 $users = [];

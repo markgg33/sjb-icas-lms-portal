@@ -66,7 +66,7 @@ include "session_check.php";
 
                     <ul class="collapse sidebar-submenu list-unstyled ps-3" id="generalSubmenu">
                         <li class="sidebar-list-item" data-page="dashboard" onclick="changePage('dashboard')">Dashboard</li>
-                        <li class="sidebar-list-item" data-page="students" onclick="changePage('mySubjects')">My Subjects</li>
+                        <li class="sidebar-list-item" data-page="mySubjects" onclick="changePage('mySubjects')">My Subjects</li>
                         <li class="sidebar-list-item" data-page="myGrades" onclick="changePage('myGrades')">My Grades</li>
 
                     </ul>

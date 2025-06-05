@@ -20,7 +20,6 @@ if ($password !== $confirm) {
     exit;
 }
 
-// Check for duplicate email
 $check = $conn->prepare("SELECT id FROM users WHERE email = ?");
 $check->bind_param("s", $email);
 $check->execute();
@@ -31,10 +30,25 @@ if ($check->num_rows > 0) {
     exit;
 }
 
+// Handle photo upload
+$photoPath = null;
+if (!empty($_FILES['photo']['name'])) {
+    $ext = pathinfo($_FILES['photo']['name'], PATHINFO_EXTENSION);
+    $filename = time() . "_user." . $ext;
+    $target = "uploads/users/" . $filename;
+
+    if (move_uploaded_file($_FILES['photo']['tmp_name'], $target)) {
+        $photoPath = $target;
+    }
+}
+
 $hashed = password_hash($password, PASSWORD_DEFAULT);
 
-$stmt = $conn->prepare("INSERT INTO users (first_name, middle_name, last_name, gender, email, password, role) VALUES (?, ?, ?, ?, ?, ?, ?)");
-$stmt->bind_param("sssssss", $first, $middle, $last, $gender, $email, $hashed, $role);
+$sql = "INSERT INTO users (first_name, middle_name, last_name, gender, email, password, role, photo)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("ssssssss", $first, $middle, $last, $gender, $email, $hashed, $role, $photoPath);
 
 if ($stmt->execute()) {
     echo json_encode(["status" => "success", "message" => "User added successfully."]);

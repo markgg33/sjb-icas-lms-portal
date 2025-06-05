@@ -195,7 +195,7 @@ include "session_check.php";
                 </div>
 
                 <div id="course-page-container">
-                    <form id="addUserForm" class="mt-4">
+                    <form id="addUserForm" enctype="multipart/form-data" class="mt-4">
                         <div class="row">
                             <div class="col-md-4">
                                 <label>First Name</label>
@@ -249,6 +249,11 @@ include "session_check.php";
                                     </span>
                                 </div>
                             </div>
+                        </div>
+
+                        <div class="col-md-6 mt-3">
+                            <label>Upload Photo</label>
+                            <input type="file" name="photo" class="form-control" />
                         </div>
 
                         <button type="submit" class="btn btn-primary mt-4"><i class="fa-solid fa-plus"></i> Add User</button>
@@ -358,6 +363,52 @@ include "session_check.php";
                 </div>
             </div>
 
+            <!---ASSIGN FACULTY PAGE--->
+            <div id="assignFaculty-page" class="page-content">
+                <div class="main-title">
+                    <h1>ASSIGN FACULTY TO SUBJECTS</h1>
+                </div>
+
+                <div class="container bg-white p-4 rounded shadow-sm mt-4">
+                    <!-- Assign Faculty Form -->
+                    <form id="assignFacultyForm">
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <label class="form-label">Select Course</label>
+                                <select class="form-select" id="facultyCourseSelect" name="course_id" required>
+                                    <option value="">-- Select Course --</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label">Select Semester</label>
+                                <select class="form-select" id="facultySemesterSelect" name="semester" required>
+                                    <option value="">-- Select Semester --</option>
+                                    <option value="1">1st Semester</option>
+                                    <option value="2">2nd Semester</option>
+                                    <option value="3">3rd Semester</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label">Select Faculty</label>
+                                <select class="form-select" id="facultySelect" name="faculty_id" required>
+                                    <option value="">-- Select Faculty --</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mt-4" id="facultySubjectCheckboxesContainer">
+                            <!-- Subject checkboxes will load here -->
+                        </div>
+
+                        <div class="mt-3 text-end">
+                            <button type="submit" class="btn btn-primary">Assign Subjects</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
 
             <!---ENROLL SUBJECT PAGE--->
             <div id="enrollSubject-page" class="page-content">
@@ -396,11 +447,11 @@ include "session_check.php";
                                         class="form-control"
                                         placeholder="Please enter student's name"
                                         aria-label="Student Name"
-                                        aria-describedby="searchStudentBtn" />
+                                        aria-describedby="searchEnrollStudentBtn" />
                                     <button
                                         class="btn btn-outline-secondary"
                                         type="button"
-                                        id="searchStudentBtn"
+                                        id="searchEnrollStudentBtn"
                                         title="Search">
                                         <i class="fa-solid fa-magnifying-glass"></i>
                                     </button>
@@ -541,13 +592,14 @@ include "session_check.php";
     <?php include "modals/successModal.php" ?>
 
     <!---FOR SUBJECT MANAGEMENT JS--->
-     <script src="javascripts/loadingOverlay.js"></script>
+    <script src="javascripts/loadingOverlay.js"></script>
     <script src="javascripts/courseSubject.js"></script>
     <script src="javascripts/togglePassword.js"></script>
     <script src="javascripts/studentSearch.js"></script>
     <script src="javascripts/curriculumCRUD.js"></script>
     <script src="javascripts/forEditStudents.js"></script>
     <script src="javascripts/adminDashboardCounts.js"></script>
+    <script src="javascripts/assignFacultySubjects.js"></script>
 
 
     <!-- AOS JS -->

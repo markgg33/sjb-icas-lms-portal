@@ -41,7 +41,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             } elseif ($user_type === 'faculty' || $user_type === 'admin') {
                 // Ensure first_name and last_name are stored in the users table
                 $_SESSION['name'] = $user['first_name'] . ' ' . $user['last_name'];
-                header("Location: " . ($user_type === 'faculty' ? "facultyDashboard.php" : "adminDashboard.php"));
+                if ($user_type === 'faculty') {
+                    $_SESSION['faculty_id'] = $user['id']; // ✅ Add this to fix the issue
+                    header("Location: facultyDashboard.php");
+                } else {
+                    header("Location: adminDashboard.php");
+                }
+                //header("Location: " . ($user_type === 'faculty' ? "facultyDashboard.php" : "adminDashboard.php"));
             }
 
             exit;

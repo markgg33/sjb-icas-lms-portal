@@ -191,40 +191,6 @@ $("#enrollCourseSelect, #enrollSemesterSelect").change(function () {
   }
 });
 
-// Submit enrollSubjectsForm 1st version
-/*$("#enrollSubjectsForm").submit(function (e) {
-  e.preventDefault();
-
-  const studentId = YOUR_STUDENT_ID; // Replace or fetch dynamically
-  const subjectIds = $('input[name="subject_ids[]"]:checked')
-    .map(function () {
-      return this.value;
-    })
-    .get();
-
-  if (subjectIds.length === 0) {
-    alert("Please select at least one subject.");
-    return;
-  }
-
-  $.post(
-    "enroll_subjects.php",
-    {
-      student_id: studentId,
-      semester: semester, // Make sure this is captured from the form
-      subject_ids: subjectIds,
-    },
-    function (res) {
-      const result = JSON.parse(res);
-      alert(
-        `Enrolled: ${result.inserted}, Skipped (already enrolled): ${result.skipped}`
-      );
-      $("#enrollSubjectsForm")[0].reset();
-      $("#enrollSubjectCheckboxes").html("");
-    }
-  );
-});*/
-
 //Second version
 $("#enrollSubjectsForm").submit(function (e) {
   e.preventDefault();
@@ -479,16 +445,20 @@ function loadUsers() {
 
       users.forEach((user) => {
         const row = document.createElement("tr");
+        const photo = user.photo ? user.photo : "uploads/students/default.png";
         row.innerHTML = `
-          <td>${user.full_name}</td>
-          <td>${user.gender}</td>
-          <td>${user.email}</td>
-          <td>${user.role}</td>
-          <td>
-            <button class="btn btn-sm btn-warning me-2" onclick="editUser(${user.id}, '${user.first_name}', '${user.middle_name}', '${user.last_name}', '${user.gender}', '${user.email}', '${user.role}')">✏️ Edit</button>
-            <button class="btn btn-sm btn-danger" onclick="deleteUser(${user.id})">🗑️ Delete</button>
-          </td>
-        `;
+  <td>
+    <img src="${photo}" class="rounded-circle me-2" width="40" height="40" style="object-fit:cover;" />
+    ${user.full_name}
+  </td>
+  <td>${user.gender}</td>
+  <td>${user.email}</td>
+  <td>${user.role}</td>
+  <td>
+    <button class="btn btn-sm btn-warning me-2" onclick="editUser(${user.id}, '${user.first_name}', '${user.middle_name}', '${user.last_name}', '${user.gender}', '${user.email}', '${user.role}')">✏️ Edit</button>
+    <button class="btn btn-sm btn-danger" onclick="deleteUser(${user.id})">🗑️ Delete</button>
+  </td>
+`;
         tbody.appendChild(row);
       });
     });
@@ -973,3 +943,4 @@ $("#editStudentForm").submit(function (e) {
 // Initial load
 loadCoursesToFilter();
 loadStudents();
+

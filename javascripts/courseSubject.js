@@ -455,7 +455,7 @@ function loadUsers() {
   <td>${user.email}</td>
   <td>${user.role}</td>
   <td>
-    <button class="btn btn-sm btn-warning me-2" onclick="editUser(${user.id}, '${user.first_name}', '${user.middle_name}', '${user.last_name}', '${user.gender}', '${user.email}', '${user.role}')">✏️ Edit</button>
+   <button class="btn btn-sm btn-warning me-2" onclick="editUser(${user.id}, '${user.first_name}', '${user.middle_name}', '${user.last_name}', '${user.gender}', '${user.email}', '${user.role}', '${user.photo || ''}')">✏️ Edit</button>
     <button class="btn btn-sm btn-danger" onclick="deleteUser(${user.id})">🗑️ Delete</button>
   </td>
 `;
@@ -469,7 +469,7 @@ loadUsers();
 
 //EDIT USER FUNCTION HERE
 
-function editUser(id, first, middle, last, gender, email, role) {
+function editUser(id, first, middle, last, gender, email, role, photo) {
   document.getElementById("editUserId").value = id;
   document.getElementById("editFirstName").value = first;
   document.getElementById("editMiddleName").value = middle;
@@ -477,6 +477,10 @@ function editUser(id, first, middle, last, gender, email, role) {
   document.getElementById("editGender").value = gender;
   document.getElementById("editEmail").value = email;
   document.getElementById("editRole").value = role;
+
+  // 👇 Update photo preview
+  document.getElementById("editUserPhotoPreview").src =
+    photo || "uploads/users/default.png";
 
   new bootstrap.Modal(document.getElementById("editUserModal")).show();
 }
@@ -943,4 +947,3 @@ $("#editStudentForm").submit(function (e) {
 // Initial load
 loadCoursesToFilter();
 loadStudents();
-

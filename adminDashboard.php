@@ -75,6 +75,7 @@ include "session_check.php";
                         <li class="sidebar-list-item" data-page="dashboard" onclick="changePage('dashboard')">Dashboard</li>
                         <li class="sidebar-list-item" data-page="students" onclick="changePage('studentList')">Students List</li>
                         <li class="sidebar-list-item" data-page="faculty" onclick="changePage('faculty')">Faculty List</li>
+                        <li class="sidebar-list-item" data-page="requests" onclick="changePage('requests')">Student Requests</li>
                     </ul>
                 </li>
 
@@ -189,7 +190,26 @@ include "session_check.php";
                 <div class="mt-4" id="paginationContainer"></div>
             </div>
 
+            <!---ADMIN REQUESTS PAGE--->
 
+            <div id="requests-page" class="page-content">
+                <div class="main-title">
+                    <h1>STUDENT REQUESTS</h1>
+                </div>
+                <table class="table" id="adminRequestsTable">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Student</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
 
             <!---USERS/FACULTY PAGE--->
             <div id="addUser-page" class="page-content">
@@ -603,6 +623,7 @@ include "session_check.php";
     <script src="javascripts/forEditStudents.js"></script>
     <script src="javascripts/adminDashboardCounts.js"></script>
     <script src="javascripts/assignFacultySubjects.js"></script>
+    <script src="javascripts/requests/adminRequests.js"></script>
 
 
     <!-- AOS JS -->

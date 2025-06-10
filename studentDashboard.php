@@ -72,7 +72,7 @@ include "session_check.php";
                     </ul>
                 </li>
 
-                <!----COURSE MANAGEMENT---->
+                <!----SYSTEM SETTINGS---->
                 <li>
                     <a class="sidebar-dropdown d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#systemSettingsSubMenu" role="button" aria-expanded="false" aria-controls="systemSettingsSubMenu">
                         <span><i class="fa-solid fa-school"></i>SYSTEM SETTINGS</span>
@@ -81,6 +81,7 @@ include "session_check.php";
 
                     <ul class="collapse sidebar-submenu list-unstyled ps-3" id="systemSettingsSubMenu">
                         <li class="sidebar-list-item" data-page="editProfile" onclick="changePage('editProfile')">Edit Profile</li>
+                        <li class="sidebar-list-item" data-page="requests" onclick="changePage('requests')">Request Requirements</li>
                     </ul>
                 </li>
 
@@ -188,6 +189,25 @@ include "session_check.php";
                 </div>
             </div>
 
+            <!-- REQUEST PAGE FOR STUDENTS -->
+            <div id="requests-page" class="page-content">
+                <div class="main-title">
+                    <h1>REQUESTS</h1>
+                </div>
+                <form id="studentRequestForm" class="card p-3 mb-4">
+                    <label>Type</label>
+                    <select name="type" class="form-select" required>
+                        <option value="Good Moral">Good Moral</option>
+                        <option value="TOR">Transcript of Records</option>
+                        <option value="Grades">Grades</option>
+                    </select>
+                    <label>Description</label>
+                    <textarea name="description" class="form-control" rows="3"></textarea>
+                    <button type="submit" class="btn btn-primary mt-3">Submit Request</button>
+                </form>
+                <div id="studentRequestsList"></div>
+            </div>
+
 
 
         </main> <!---END OF MAIN CONTAINER--->
@@ -198,13 +218,17 @@ include "session_check.php";
         <div class="spinner-border text-light" role="status"></div>
     </div>
 
-    <!-- Order is important! -->
+    <!-- Javascripts here -->
 
     <script src="javascripts/loadStudentProfile.js"></script>
     <script src="javascripts/courseSubject.js"></script>
     <script src="javascripts/sidebar.js"></script>
     <script src="javascripts/togglePassword.js"></script>
     <script src="javascripts/loadingOverlay.js"></script> <!-- required first -->
+
+    <!-- Requests JS -->
+
+    <script src="javascripts/requests/studentRequests.js"></script>
 
 
     <!-- AOS JS -->

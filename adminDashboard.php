@@ -39,10 +39,13 @@ include "session_check.php";
                 Welcome, <?= htmlspecialchars($_SESSION['name']) ?>
             </div>
             <ul class="header-list">
-                <li>
-                    <a href="#" class="btn-items" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-bell"></i></a>
-                    <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" href="#">No Notifications</a></li>
+                <li class="nav-item dropdown">
+                    <a class="btn-items nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa-solid fa-bell"></i>
+                        <span id="notifCount" class="badge bg-danger ms-1 d-none">0</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" id="notifList">
+                        <li><a class="dropdown-item text-muted">Loading...</a></li>
                     </ul>
                 </li>
                 <li>

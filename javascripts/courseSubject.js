@@ -129,26 +129,29 @@ $(document).ready(function () {
   // ================================
   $("#addMoreSubject").click(function () {
     const html = `
-    <div class="row subject-group-creation mt-2">
-      <div class="col-4">
-        <input type="text" name="subject_codes[]" class="form-control" placeholder="Subject Code" required>
-      </div>
-      <div class="col-4">
-        <input type="text" name="subject_names[]" class="form-control" placeholder="Subject Name" required>
-      </div>
-      <div class="col-3">
-        <select name="subject_semesters[]" class="form-control" required>
-          <option value="">Select Semester</option>
-          <option value="1">1st Sem</option>
-          <option value="2">2nd Sem</option>
-          <option value="3">3rd Sem</option>
-        </select>
-      </div>
-      <div class="col">
-        <button type="button" class="btn btn-danger removeSubject"><i class="fa-solid fa-trash"></i></button>
-      </div>
+  <div class="row subject-group-creation mt-2">
+    <div class="col-3">
+      <input type="text" name="subject_codes[]" class="form-control" placeholder="Subject Code" required>
     </div>
-    `;
+    <div class="col-3">
+      <input type="text" name="subject_names[]" class="form-control" placeholder="Subject Name" required>
+    </div>
+    <div class="col-3">
+      <select name="subject_semesters[]" class="form-control" required>
+        <option value="">Select Semester</option>
+        <option value="1">1st Sem</option>
+        <option value="2">2nd Sem</option>
+        <option value="3">3rd Sem</option>
+      </select>
+    </div>
+    <div class="col-2">
+      <input type="number" name="subject_units[]" class="form-control" placeholder="Units" min="2" max="9" required>
+    </div>
+    <div class="col">
+      <button type="button" class="btn btn-danger removeSubject"><i class="fa-solid fa-trash"></i></button>
+    </div>
+  </div>
+`;
     $("#subjectFormRows").append(html);
   });
 
@@ -455,8 +458,14 @@ function loadUsers() {
   <td>${user.email}</td>
   <td>${user.role}</td>
   <td>
-   <button class="btn btn-sm btn-warning me-2" onclick="editUser(${user.id}, '${user.first_name}', '${user.middle_name}', '${user.last_name}', '${user.gender}', '${user.email}', '${user.role}', '${user.photo || ''}')">✏️ Edit</button>
-    <button class="btn btn-sm btn-danger" onclick="deleteUser(${user.id})">🗑️ Delete</button>
+   <button class="btn btn-sm btn-warning me-2" onclick="editUser(${user.id}, '${
+          user.first_name
+        }', '${user.middle_name}', '${user.last_name}', '${user.gender}', '${
+          user.email
+        }', '${user.role}', '${user.photo || ""}')">✏️ Edit</button>
+    <button class="btn btn-sm btn-danger" onclick="deleteUser(${
+      user.id
+    })">🗑️ Delete</button>
   </td>
 `;
         tbody.appendChild(row);

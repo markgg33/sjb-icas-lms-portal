@@ -23,6 +23,11 @@ function changePage(page) {
   if (page === "editProfile") {
     loadStudentProfile();
   }
+
+  // ✅ Load faculty subjects if the admin is editing faculty assignments
+  if (page === "editFacultySubjects") {
+    loadFacultySubjects();
+  }
 }
 
 // Set the default page to be the dashboard page

@@ -1,19 +1,16 @@
 <?php
-include 'config.php';
+require 'config.php';
 
-$student_id = $_POST['student_id'];
-$new_balance = $_POST['new_balance'];
+$id = $_POST['id'];
+$amount = $_POST['amount'];
 
-$sql = "UPDATE students SET balance = ? WHERE id = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("di", $new_balance, $student_id);
-
-$response = [];
-if ($stmt->execute()) {
-    $response['status'] = 'success';
-} else {
-    $response['status'] = 'error';
-    $response['message'] = $conn->error;
+if (!$id || $amount <= 0) {
+    echo json_encode(["status" => "error", "message" => "Invalid input"]);
+    exit;
 }
 
-echo json_encode($response);
+$conn->query("UPDATE students SET balance = balance - $amount WHERE id = $id");
+$res = $conn->query("SELECT balance FROM students WHERE id = $id");
+$newBalance = $res->fetch_assoc()['balance'];
+
+echo json_encode(["status" => "success", "message" => "Payment applied", "new_balance" => $newBalance]);

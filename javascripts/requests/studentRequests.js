@@ -1,5 +1,8 @@
 $("#studentRequestForm").on("submit", async function (e) {
   e.preventDefault();
+
+  if (!confirm("Are you sure you want to submit this request?")) return;
+
   const fd = new FormData(this);
   const res = await fetch("student_submit_request.php", {
     method: "POST",

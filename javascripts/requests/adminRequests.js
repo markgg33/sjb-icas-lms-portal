@@ -42,10 +42,14 @@ async function updateRequest(id, status) {
   loadAdminRequests();
 }
 
+//ADDED CONFIRMATION
 function approveRequest(id) {
-  updateRequest(id, "Approved");
+  if (confirm("Approve this request?")) {
+    updateRequest(id, "Approved");
+  }
 }
-
 function rejectRequest(id) {
-  updateRequest(id, "Rejected");
+  if (confirm("Reject this request?")) {
+    updateRequest(id, "Rejected");
+  }
 }

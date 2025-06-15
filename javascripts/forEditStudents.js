@@ -75,28 +75,31 @@ function loadStudentDetails(student) {
         // Add semester label row (spanning full table)
         const semesterRow = document.createElement("tr");
         semesterRow.innerHTML = `
-      <td colspan="6" class="table-secondary fw-bold text-uppercase">${semester}</td>
-    `;
+          <td colspan="7" class="table-secondary fw-bold text-uppercase">Semester ${semester}</td>
+        `;
         tableBody.appendChild(semesterRow);
 
         // Add subject rows
         grouped[semester].forEach((subject) => {
           const row = document.createElement("tr");
           row.innerHTML = `
-        <td>${subject.code}</td>
-        <td>${subject.name}</td>
-        <td>${subject.semester}</td>
-        <td>${subject.school_year}</td>
-        <td>${subject.date_enrolled}</td>
-        <td>
-          <button class="btn btn-sm btn-danger remove-subject-btn"
-            data-subject="${subject.id}"
-            data-code="${subject.code}"
-            data-semester="${subject.semester}">
-            Remove
-          </button>
-        </td>
-      `;
+  <td>${subject.code}</td>
+  <td>${subject.name}</td>
+  <td>${subject.units}</td>
+  <td>${subject.semester}</td>
+  <td>${subject.school_year}</td>
+  <td>${subject.date_enrolled}</td>
+  <td>
+    <button class="btn btn-sm btn-danger remove-subject-btn"
+      data-subject="${subject.id}"
+      data-code="${subject.code}"
+      data-units="${subject.units}"
+      data-semester="${subject.semester}">
+      Remove
+    </button>
+  </td>
+`;
+
           tableBody.appendChild(row);
         });
       });
@@ -117,7 +120,12 @@ function loadStudentDetails(student) {
     });
 
   // Load balance
-  fetch(`get_balance.php?student_id=${student.id}`)
+  /*fetch(`get_balance.php?student_id=${student.id}`)
+    .then((res) => res.json())
+    .then((data) => {
+      document.getElementById("balanceInput").value = data.balance ?? 0;
+    });*/
+  fetch(`get_balance.php?student_id=${selectedStudentId}`)
     .then((res) => res.json())
     .then((data) => {
       document.getElementById("balanceInput").value = data.balance ?? 0;
@@ -145,7 +153,7 @@ function removeSubject(subjectId, semester) {
     });
 }
 
-document.getElementById("saveBalanceBtn").addEventListener("click", () => {
+/*document.getElementById("saveBalanceBtn").addEventListener("click", () => {
   const newBalance = parseFloat(document.getElementById("balanceInput").value);
   showLoading();
   fetch("update_balance.php", {
@@ -164,8 +172,7 @@ document.getElementById("saveBalanceBtn").addEventListener("click", () => {
         }
       }, 500);
     });
-});
-
+});*/
 
 // PHP USED HERE IN FOR EDITSTUDENTS
 // search_student.php, get_student_subjects.php, get_balance.php, remove_student_subject.php, update_balance.php

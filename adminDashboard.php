@@ -74,7 +74,6 @@ include "session_check.php";
                     <ul class="collapse sidebar-submenu list-unstyled ps-3" id="generalSubmenu">
                         <li class="sidebar-list-item" data-page="dashboard" onclick="changePage('dashboard')">Dashboard</li>
                         <li class="sidebar-list-item" data-page="students" onclick="changePage('studentList')">Students List</li>
-                        <li class="sidebar-list-item" data-page="faculty" onclick="changePage('faculty')">Faculty List</li>
                         <li class="sidebar-list-item" data-page="requests" onclick="changePage('requests')">Student Requests</li>
                     </ul>
                 </li>
@@ -105,6 +104,7 @@ include "session_check.php";
                         <li class="sidebar-list-item" data-page="assignFaculty" onclick="changePage('assignFaculty')">Assign Faculty</li>
                         <li class="sidebar-list-item" data-page="enrollSubject" onclick="changePage('enrollSubject')">Enroll Subjects to Student</li>
                         <li class="sidebar-list-item" data-page="editSubjects" onclick="changePage('editSubjects')">Edit Subjects</li>
+                        <li class="sidebar-list-item" data-page="editFacultySubjects" onclick="changePage('editFacultySubjects')">Edit Faculty Subjects</li>
                     </ul>
                 </li>
 
@@ -144,6 +144,26 @@ include "session_check.php";
                     </div>
                 </div>
 
+            </div>
+
+            <!---EDIT SUBJECTS FACULTY PAGE--->
+            <div id="editFacultySubjects-page" class="page-content">
+                <div class="main-title">
+                    <h1>EDIT FACULTY SUBJECTS</h1>
+                </div>
+
+                <div class="container bg-white p-4 rounded shadow-sm mt-3">
+                    <div class="mb-3">
+                        <label for="facultyDropdown" class="form-label">Select Faculty</label>
+                        <select id="facultyDropdown" class="form-select">
+                            <option value="">-- Select Faculty --</option>
+                        </select>
+                    </div>
+
+                    <div id="facultySubjectsContainer">
+                        <!-- Subjects grouped by semester will be displayed here -->
+                    </div>
+                </div>
             </div>
 
             <!---STUDENT LIST PAGE--->
@@ -344,33 +364,42 @@ include "session_check.php";
                         <strong id="studentName"></strong> <span class="text-muted" id="studentCourseYear"></span>
                     </div>
                     <div class="card-body">
-                        <!-- Balance Update -->
+                        <!-- Balance (Read-Only) -->
                         <div class="mb-3 row">
                             <label class="col-sm-2 col-form-label">Balance (₱)</label>
                             <div class="col-sm-4">
-                                <input type="number" class="form-control" id="balanceInput" step="0.01">
-                            </div>
-                            <div class="col-sm-2">
-                                <button class="btn btn-success" id="saveBalanceBtn">Save Balance</button>
+                                <input type="number" class="form-control" id="balanceInput" disabled readonly>
                             </div>
                         </div>
 
-                        <!-- Enrolled Subjects -->
-                        <h5 class="mt-4">Enrolled Subjects</h5>
-                        <table class="table table-bordered mt-2" id="subjectTable">
-                            <thead>
-                                <tr>
-                                    <th>Code</th>
-                                    <th>Name</th>
-                                    <th>Semester</th>
-                                    <th>School Year</th>
-                                    <th>Date Enrolled</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
+                        <!-- Payment (Subtracts from balance) -->
+                        <div class="mb-3 row">
+                            <label class="col-sm-2 col-form-label">Payment (₱)</label>
+                            <div class="col-sm-4">
+                                <input type="number" class="form-control" id="paymentInput">
+                            </div>
+                            <div class="col-sm-2">
+                                <button class="btn btn-primary" id="applyPaymentBtn">Apply Payment</button>
+                            </div>
+                        </div>
                     </div>
+
+                    <!-- Enrolled Subjects -->
+                    <h5 class="mt-4">Enrolled Subjects</h5>
+                    <table class="table table-bordered mt-2" id="subjectTable">
+                        <thead>
+                            <tr>
+                                <th>Code</th>
+                                <th>Name</th>
+                                <th>Units</th>
+                                <th>Semester</th>
+                                <th>School Year</th>
+                                <th>Date Enrolled</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
                 </div>
             </div>
 
@@ -537,10 +566,10 @@ include "session_check.php";
                     <form id="subjectForm">
                         <div id="subjectFormRows">
                             <div class="row subject-group-creation">
-                                <div class="col-4">
+                                <div class="col-3">
                                     <input type="text" name="subject_codes[]" class="form-control" placeholder="Subject Code" required>
                                 </div>
-                                <div class="col-4">
+                                <div class="col-3">
                                     <input type="text" name="subject_names[]" class="form-control" placeholder="Subject Name" required>
                                 </div>
                                 <div class="col-3">
@@ -550,6 +579,9 @@ include "session_check.php";
                                         <option value="2">2nd Sem</option>
                                         <option value="3">3rd Sem</option>
                                     </select>
+                                </div>
+                                <div class="col-2">
+                                    <input type="number" name="subject_units[]" class="form-control" placeholder="Units" min="2" max="9" required>
                                 </div>
                                 <div class="col">
                                     <button type="button" class="btn btn-danger removeSubject"><i class="fa-solid fa-trash"></i></button>
@@ -615,16 +647,19 @@ include "session_check.php";
     <?php include "modals/successModal.php" ?>
 
     <!---FOR SUBJECT MANAGEMENT JS--->
+    <script src="javascripts/editFacultySubjects.js"></script>
     <script src="javascripts/loadingOverlay.js"></script>
     <script src="javascripts/courseSubject.js"></script>
     <script src="javascripts/togglePassword.js"></script>
     <script src="javascripts/studentSearch.js"></script>
     <script src="javascripts/curriculumCRUD.js"></script>
     <script src="javascripts/forEditStudents.js"></script>
+    <script src="javascripts/forPayments.js"></script>
     <script src="javascripts/adminDashboardCounts.js"></script>
     <script src="javascripts/assignFacultySubjects.js"></script>
     <script src="javascripts/requests/adminRequests.js"></script>
     <script src="javascripts/requests/notifications.js"></script>
+    
 
 
     <!-- AOS JS -->

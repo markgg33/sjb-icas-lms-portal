@@ -2,17 +2,16 @@
 session_start();
 include 'config.php';
 
-// If `student_id` is provided by POST (admin usage), use it
+// Determine which student to use
 if (isset($_POST['student_id'])) {
     $student_id = $_POST['student_id'];
 } elseif (isset($_SESSION['student_id'])) {
-    // If not, fallback to session (for student self-view)
     $student_id = $_SESSION['student_id'];
 } else {
     die("Student not specified or logged in.");
 }
 
-// Step 1: Get course title
+// Step 1: Get course name
 $courseQuery = "
     SELECT c.name AS course_name
     FROM students s
@@ -26,9 +25,16 @@ $courseResult = $courseStmt->get_result();
 $courseData = $courseResult->fetch_assoc();
 $course_name = $courseData ? $courseData['course_name'] : 'N/A';
 
-// Step 2: Get enrolled subjects (with subject ID!)
+// ✅ Step 2: Get enrolled subjects with units
 $subjectQuery = "
-    SELECT s.id AS subject_id, s.code, s.name, es.semester, es.school_year, es.date_enrolled
+    SELECT 
+        s.id AS subject_id,
+        s.code,
+        s.name,
+        s.units,
+        es.semester,
+        es.school_year,
+        es.date_enrolled
     FROM enrolled_subjects es
     JOIN subjects s ON s.id = es.subject_id
     WHERE es.student_id = ?
@@ -42,16 +48,17 @@ $result = $stmt->get_result();
 $subjects = [];
 while ($row = $result->fetch_assoc()) {
     $subjects[] = [
-        'id' => $row['subject_id'], // ✅ this will now be accessible in JS
+        'id' => $row['subject_id'],
         'code' => $row['code'],
         'name' => $row['name'],
+        'units' => (int)$row['units'], // ✅ Include units
         'semester' => $row['semester'],
         'school_year' => $row['school_year'],
         'date_enrolled' => $row['date_enrolled']
     ];
 }
 
-// Step 3: Return JSON with course info + subjects
+// Step 3: Return data
 echo json_encode([
     'course_name' => $course_name,
     'subjects' => $subjects

@@ -624,6 +624,7 @@ include "session_check.php";
     <script src="javascripts/adminDashboardCounts.js"></script>
     <script src="javascripts/assignFacultySubjects.js"></script>
     <script src="javascripts/requests/adminRequests.js"></script>
+    <script src="javascripts/requests/notifications.js"></script>
 
 
     <!-- AOS JS -->

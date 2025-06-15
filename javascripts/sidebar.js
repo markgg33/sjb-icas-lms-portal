@@ -1,13 +1,25 @@
 function changePage(page) {
-  // For hiding the pages
-  document.querySelectorAll(".page-content").forEach(function (pageContent) {
-    pageContent.style.display = "none";
-  });
+  const targetId = page.endsWith("-page") ? page : `${page}-page`;
 
-  // For showing the pages
-  document.getElementById(page + "-page").style.display = "block";
+  // Hide all pages
+  document
+    .querySelectorAll(".page-content")
+    .forEach((el) => (el.style.display = "none"));
 
-  // 👇 Load profile only when editProfile page is shown
+  // Show the selected page
+  const target = document.getElementById(targetId);
+  if (target) {
+    target.style.display = "block";
+  }
+
+  // Highlight active sidebar item
+  document
+    .querySelectorAll(".sidebar-list-item")
+    .forEach((el) =>
+      el.classList.toggle("active", el.getAttribute("data-page") === page)
+    );
+
+  // ✅ Load student profile only when the edit profile page is shown
   if (page === "editProfile") {
     loadStudentProfile();
   }

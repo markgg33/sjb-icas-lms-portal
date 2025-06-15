@@ -21,7 +21,15 @@ async function loadAdminRequests() {
   });
   $("#adminRequestsTable tbody").html(html);
 }
-loadAdminRequests();
+
+loadAdminRequests(); // initial load ✅
+
+// 🔁 Auto-refresh every 5s *only if visible*
+setInterval(() => {
+  if ($("#requests-page").is(":visible")) {
+    loadAdminRequests();
+  }
+}, 5000); // 5 seconds
 
 async function updateRequest(id, status) {
   const res = await fetch("admin_update_request.php", {
@@ -33,9 +41,11 @@ async function updateRequest(id, status) {
   alert(r.message);
   loadAdminRequests();
 }
+
 function approveRequest(id) {
   updateRequest(id, "Approved");
 }
+
 function rejectRequest(id) {
   updateRequest(id, "Rejected");
 }

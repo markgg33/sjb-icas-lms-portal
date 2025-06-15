@@ -35,10 +35,13 @@ include "session_check.php";
                 Welcome, <?= htmlspecialchars($_SESSION['name']) ?>
             </div>
             <ul class="header-list">
-                <li>
-                    <a href="#" class="btn-items" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-bell"></i></a>
-                    <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" href="#">No Notifications</a></li>
+                <li class="nav-item dropdown">
+                    <a class="btn-items nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa-solid fa-bell"></i>
+                        <span id="notifCount" class="badge bg-danger ms-1 d-none">0</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" id="notifList">
+                        <li><a class="dropdown-item text-muted">Loading...</a></li>
                     </ul>
                 </li>
                 <li>
@@ -219,12 +222,13 @@ include "session_check.php";
     </div>
 
     <!-- Javascripts here -->
-
+    <script src="javascripts/loadingOverlay.js"></script> <!-- required first -->
     <script src="javascripts/loadStudentProfile.js"></script>
     <script src="javascripts/courseSubject.js"></script>
     <script src="javascripts/sidebar.js"></script>
     <script src="javascripts/togglePassword.js"></script>
-    <script src="javascripts/loadingOverlay.js"></script> <!-- required first -->
+    <script src="javascripts/requests/notifications.js"></script>
+    <script src="javascripts/requests/studentDashboard.js"></script>
 
     <!-- Requests JS -->
 

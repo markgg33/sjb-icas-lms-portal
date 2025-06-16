@@ -87,10 +87,11 @@ $(document).ready(function () {
   });
 
   // ================================
-  // Assign Subjects to Course by Semester
+  // Assign Subjects to Course by Semester (Improved)
   // ================================
   $("#assignForm").submit(function (e) {
     e.preventDefault();
+
     const course_id = $("#courseSelect").val();
     const semester = $("#semesterSelect").val();
     const subject_ids = $('input[name="subject_ids[]"]:checked')
@@ -104,6 +105,8 @@ $(document).ready(function () {
       return;
     }
 
+    if (!confirm("Are you sure you want to assign these subjects?")) return;
+
     $.post(
       "assign_subject.php",
       {
@@ -112,14 +115,16 @@ $(document).ready(function () {
         subject_ids: subject_ids,
       },
       function (res) {
-        if (res === "success") {
-          alert("Subjects assigned!");
-        } else if (res === "no_changes") {
-          alert("All selected subjects are already assigned.");
-        } else {
+        try {
+          const data = JSON.parse(res);
+          alert(
+            `${data.inserted} subject(s) assigned. ${data.skipped} skipped (already assigned).`
+          );
+          $("#assignForm")[0].reset();
+        } catch (err) {
           alert("Failed to assign subjects.");
+          console.error(err);
         }
-        $("#assignForm")[0].reset();
       }
     );
   });

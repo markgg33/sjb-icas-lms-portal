@@ -32,16 +32,20 @@ include "session_check.php";
                 Welcome, <?= htmlspecialchars($_SESSION['name']) ?>
             </div>
             <ul class="header-list">
-                <li>
-                    <a href="#" class="btn-items" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-bell"></i></a>
-                    <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" href="#">No Notifications</a></li>
+                <li class="nav-item dropdown">
+                    <a class="btn-items nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa-solid fa-bell"></i>
+                        <span id="notifCount" class="badge bg-danger ms-1 d-none">0</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" id="notifList">
+                        <li><a class="dropdown-item text-muted">Loading...</a></li>
                     </ul>
                 </li>
                 <li>
                     <a href="logout.php" class="btn-items"><i class="fa-solid fa-right-from-bracket"></i></a>
                 </li>
             </ul>
+
         </header>
 
 
@@ -65,6 +69,7 @@ include "session_check.php";
                         <li class="sidebar-list-item" data-page="dashboard" onclick="changePage('dashboard')">Dashboard</li>
                         <li class="sidebar-list-item" data-page="students" onclick="changePage('mySubjects')">Subjects</li>
                         <li class="sidebar-list-item" data-page="gradeSubmission" onclick="changePage('gradeSubmission')">Grade Submission</li>
+                        <li class="sidebar-list-item" data-page="requests" onclick="changePage('requests')">Student Requests</li>
 
                     </ul>
                 </li>
@@ -104,6 +109,29 @@ include "session_check.php";
                     <!-- Cards will be loaded here -->
                 </div>
             </div>
+
+            <!---ADMIN REQUESTS PAGE--->
+
+            <div id="requests-page" class="page-content">
+                <div class="main-title">
+                    <h1>GRADE REQUESTS FROM STUDENTS</h1>
+                </div>
+                <table class="table" id="facultyRequestsTable">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Student</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                            <th>Submitted</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
 
             <!---MY GRADES PAGE--->
             <div id="gradeSubmission-page" class="page-content">
@@ -218,6 +246,8 @@ include "session_check.php";
     </div>
 
     <!-- Order is important! -->
+    <script src="javascripts/requests/facultyRequests.js"></script>
+    <script src="javascripts/requests/notifications.js"></script>
     <script src="javascripts/loadFacultySubjects.js"></script> <!-- required first -->
     <script src="javascripts/gradeSubmission.js"></script> <!-- required first -->
     <script src="javascripts/loadingOverlay.js"></script> <!-- required first -->

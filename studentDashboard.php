@@ -71,6 +71,7 @@ include "session_check.php";
                         <li class="sidebar-list-item" data-page="dashboard" onclick="changePage('dashboard')">Dashboard</li>
                         <li class="sidebar-list-item" data-page="mySubjects" onclick="changePage('mySubjects')">My Subjects</li>
                         <li class="sidebar-list-item" data-page="myGrades" onclick="changePage('myGrades')">My Grades</li>
+                        
 
                     </ul>
                 </li>
@@ -199,16 +200,30 @@ include "session_check.php";
                 </div>
                 <form id="studentRequestForm" class="card p-3 mb-4">
                     <label>Type</label>
-                    <select name="type" class="form-select" required>
-                        <option value="Good Moral">Good Moral</option>
+                    <select name="type" class="form-select" id="requestType" required>
+                        <option value="">Select Type</option>
                         <option value="TOR">Transcript of Records</option>
-                        <option value="Grades">Grades</option>
+                        <option value="Good Moral">Good Moral</option>
+                        <option value="True Copy of Grades">True Copy of Grades</option>
+                        <option value="Diploma">Diploma</option>
+                        <option value="Payment Receipt">Payment Receipt</option>
+                        <option value="Grades">Grade Change</option>
                     </select>
+
+                    <div id="facultyDropdownContainer" class="mt-2 d-none">
+                        <label>Select Faculty (for Grade Request)</label>
+                        <select name="faculty_id" id="facultyDropdown" class="form-select">
+                            <option value="">Select Faculty</option>
+                        </select>
+                    </div>
+
                     <label>Description</label>
                     <textarea name="description" class="form-control" rows="3"></textarea>
                     <button type="submit" class="btn btn-primary mt-3">Submit Request</button>
                 </form>
+
                 <div id="studentRequestsList"></div>
+                <div id="studentRequestsPagination" class="mt-2"></div>
             </div>
 
 

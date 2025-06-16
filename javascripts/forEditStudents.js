@@ -58,7 +58,6 @@ function loadStudentDetails(student) {
       const tableBody = document.querySelector("#subjectTable tbody");
       tableBody.innerHTML = "";
 
-      // Step 1: Group subjects by semester
       const grouped = {};
       data.subjects.forEach((subject) => {
         if (!grouped[subject.semester]) {
@@ -67,44 +66,47 @@ function loadStudentDetails(student) {
         grouped[subject.semester].push(subject);
       });
 
-      // Step 2: Sort semesters (optional, you can define your own order)
       const sortedSemesters = Object.keys(grouped).sort();
 
-      // Step 3: Render grouped rows
       sortedSemesters.forEach((semester) => {
-        // Add semester label row (spanning full table)
+        const subjects = grouped[semester];
+        const totalUnits = subjects.reduce(
+          (sum, s) => sum + parseInt(s.units || 0),
+          0
+        );
+
         const semesterRow = document.createElement("tr");
         semesterRow.innerHTML = `
-          <td colspan="7" class="table-secondary fw-bold text-uppercase">Semester ${semester}</td>
+          <td colspan="7" class="table-secondary fw-bold text-uppercase">
+            Semester ${semester} — Total Units: ${totalUnits}
+          </td>
         `;
         tableBody.appendChild(semesterRow);
 
-        // Add subject rows
-        grouped[semester].forEach((subject) => {
+        subjects.forEach((subject) => {
           const row = document.createElement("tr");
           row.innerHTML = `
-  <td>${subject.code}</td>
-  <td>${subject.name}</td>
-  <td>${subject.units}</td>
-  <td>${subject.semester}</td>
-  <td>${subject.school_year}</td>
-  <td>${subject.date_enrolled}</td>
-  <td>
-    <button class="btn btn-sm btn-danger remove-subject-btn"
-      data-subject="${subject.id}"
-      data-code="${subject.code}"
-      data-units="${subject.units}"
-      data-semester="${subject.semester}">
-      Remove
-    </button>
-  </td>
-`;
-
+            <td>${subject.code}</td>
+            <td>${subject.name}</td>
+            <td>${subject.units}</td>
+            <td>${subject.semester}</td>
+            <td>${subject.school_year}</td>
+            <td>${subject.date_enrolled}</td>
+            <td>
+              <button class="btn btn-sm btn-danger remove-subject-btn"
+                data-subject="${subject.id}"
+                data-code="${subject.code}"
+                data-units="${subject.units}"
+                data-semester="${subject.semester}">
+                Remove
+              </button>
+            </td>
+          `;
           tableBody.appendChild(row);
         });
       });
 
-      // Re-bind remove buttons
+      // Bind removal
       document.querySelectorAll(".remove-subject-btn").forEach((button) => {
         button.addEventListener("click", (e) => {
           const subjectId = e.target.getAttribute("data-subject");
@@ -120,11 +122,6 @@ function loadStudentDetails(student) {
     });
 
   // Load balance
-  /*fetch(`get_balance.php?student_id=${student.id}`)
-    .then((res) => res.json())
-    .then((data) => {
-      document.getElementById("balanceInput").value = data.balance ?? 0;
-    });*/
   fetch(`get_balance.php?student_id=${selectedStudentId}`)
     .then((res) => res.json())
     .then((data) => {

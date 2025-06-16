@@ -7,12 +7,10 @@ function loadCurriculum() {
 
       data.forEach((course) => {
         const col = document.createElement("div");
-        col.className = "col-md-6 mb-4"; // 2 per row on md screens, adjust as needed
+        col.className = "col-md-6 mb-4";
 
         const card = document.createElement("div");
-        card.className = "card h-100"; // Make sure all cards are same height
-
-        col.appendChild(card);
+        card.className = "card h-100";
 
         const header = document.createElement("div");
         header.className = "card-header";
@@ -21,40 +19,49 @@ function loadCurriculum() {
         const body = document.createElement("div");
         body.className = "card-body";
 
-        // Loop through semesters 1 to 3
         for (let sem = 1; sem <= 3; sem++) {
           const semSubjects = course.subjects[sem.toString()] || [];
 
+          const totalUnits = semSubjects.reduce(
+            (sum, s) => sum + parseInt(s.units || 0),
+            0
+          );
+
           const semHeader = document.createElement("h5");
-          semHeader.textContent = `📚 ${sem} Semester`;
+          semHeader.innerHTML = `${sem} Semester <span class="badge bg-secondary ms-2">${totalUnits} unit${
+            totalUnits !== 1 ? "s" : ""
+          }</span>`;
           body.appendChild(semHeader);
-
-          const ul = document.createElement("ul");
-          ul.className = "list-group mb-3";
-
-          semSubjects.forEach((subject) => {
-            const li = document.createElement("li");
-            li.className =
-              "list-group-item d-flex justify-content-between align-items-center";
-            li.innerHTML = `
-       <span><strong>${subject.code}</strong> - ${subject.name}</span>
-      <button class="btn btn-sm btn-danger" onclick="removeCourseSubject(${course.course_id}, ${subject.subject_id}, ${sem})">Remove ❌</button>
-    `;
-            ul.appendChild(li);
-          });
 
           if (semSubjects.length === 0) {
             const empty = document.createElement("p");
             empty.textContent = "No subjects assigned.";
             body.appendChild(empty);
           } else {
+            const ul = document.createElement("ul");
+            ul.className = "list-group mb-3";
+
+            semSubjects.forEach((subject) => {
+              const li = document.createElement("li");
+              li.className =
+                "list-group-item d-flex justify-content-between align-items-center";
+              li.innerHTML = `
+                <span><strong>${subject.code}</strong> - ${subject.name}</span>
+                <span class="badge bg-info text-dark">${subject.units} unit${
+                subject.units > 1 ? "s" : ""
+              }</span>
+              `;
+              ul.appendChild(li);
+            });
+
             body.appendChild(ul);
           }
         }
 
         card.appendChild(header);
         card.appendChild(body);
-        container.appendChild(col); // instead of container.appendChild(card)
+        col.appendChild(card);
+        container.appendChild(col);
       });
     });
 }

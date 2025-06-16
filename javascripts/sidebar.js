@@ -28,6 +28,10 @@ function changePage(page) {
   if (page === "editFacultySubjects") {
     loadFacultySubjects();
   }
+
+  if (page === "facultyRequests") {
+    loadFacultyRequests();
+  }
 }
 
 // Set the default page to be the dashboard page

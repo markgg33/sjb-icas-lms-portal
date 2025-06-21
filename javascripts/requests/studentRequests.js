@@ -72,9 +72,23 @@ async function loadStudentRequests(page = 1) {
   const list = data.requests;
   let html = `<table class="table table-bordered"><thead><tr><th>Type</th><th>Status</th><th>Submitted At</th></tr></thead><tbody>`;
 
-  list.forEach((r) => {
+  /*list.forEach((r) => {
     html += `<tr><td>${r.type}</td><td>${r.status}</td><td>${r.created_at}</td></tr>`;
+  });*/
+  list.forEach((r) => {
+    let attachmentHTML = "";
+
+    if (r.status === "Approved" && r.attachment) {
+      attachmentHTML = `<br><a href="${r.attachment}" target="_blank" class="btn btn-sm btn-outline-primary mt-1">📎 View Attachment</a>`;
+    }
+
+    html += `<tr>
+    <td>${r.type}</td>
+    <td>${r.status}${attachmentHTML}</td>
+    <td>${r.created_at}</td>
+  </tr>`;
   });
+
   html += `</tbody></table>`;
   $("#studentRequestsList").html(html);
 

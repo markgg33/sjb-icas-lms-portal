@@ -1,32 +1,28 @@
-console.log("✅ loadStudentProfile.js loaded");
+console.log("✅ loadFacultyProfile.js loaded");
 
-function loadStudentProfile() {
+function loadFacultyProfile() {
   showLoading();
 
-  fetch("get_loggedin_student.php")
+  fetch("get_loggedin_faculty.php")
     .then((res) => res.json())
-    .then((s) => {
-      if (s.error) {
+    .then((f) => {
+      if (f.error) {
         alert("Not logged in");
         return;
       }
 
-      console.log("🎯 Student Profile:", s);
+      console.log("🎯 Faculty Profile:", f);
 
-      $("#editProfileId").val(s.id);
-      $("#editProfileFirstName").val(s.first_name);
-      $("#editProfileMiddleName").val(s.middle_name);
-      $("#editProfileLastName").val(s.last_name);
-      $("#editProfileEmail").val(s.email);
-
-      $("#editProfileSchoolId").val(s.school_id);
-      $("#editProfileCourse").val(s.course_name);
-      $("#editProfileYear").val("Year " + s.year_level);
+      $("#editProfileId").val(f.id);
+      $("#editProfileFirstName").val(f.first_name);
+      $("#editProfileMiddleName").val(f.middle_name ?? "");
+      $("#editProfileLastName").val(f.last_name);
+      $("#editProfileEmail").val(f.email);
 
       const photoSrc =
-        s.photo && s.photo.trim() !== ""
-          ? s.photo
-          : "uploads/students/default.png";
+        f.photo && f.photo.trim() !== ""
+          ? f.photo
+          : "uploads/users/default.png";
 
       $("#editProfilePhotoPreview").attr("src", photoSrc);
     })
@@ -44,17 +40,16 @@ $("#editProfileForm").submit(function (e) {
   if (!confirm("Save changes to your profile?")) return;
 
   const formData = new FormData(this);
-
   showLoading();
 
-  fetch("update_student.php", {
+  fetch("update_faculty.php", {
     method: "POST",
     body: formData,
   })
     .then((res) => res.json())
     .then((data) => {
       alert(data.message);
-      if (data.status === "success") loadStudentProfile(); // reload preview
+      if (data.status === "success") loadFacultyProfile(); // reload preview
     })
     .catch((err) => {
       console.error("❌ Update error:", err);

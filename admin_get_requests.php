@@ -33,7 +33,7 @@ if ($_SESSION['user_type'] !== 'admin') {
 
 // Filter out 'Grades' requests sent to faculty
 $sql = "
-    SELECT r.id, r.type, r.description, r.status, r.created_at, 
+    SELECT r.id, r.type, r.description, r.status, r.attachment, r.created_at,  
            CONCAT(s.first_name, ' ', s.middle_name, ' ', s.last_name) AS student_name
     FROM requests r
     JOIN students s ON r.student_id = s.id

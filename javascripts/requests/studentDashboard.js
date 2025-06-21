@@ -60,3 +60,33 @@ setInterval(() => {
 
 // Load once on page load
 loadStudentRequests();
+
+//FOR DASHBOARD
+
+document.addEventListener("DOMContentLoaded", () => {
+  fetch("get_student_dashboard_info.php")
+    .then((res) => res.json())
+    .then((data) => {
+      document.getElementById("studentName").textContent = data.name;
+      document.getElementById("studentCourseYear").textContent = `${
+        data.course
+      } - ${ordinal(data.year_level)} Year`;
+      document.getElementById("studentBalance").textContent =
+        "₱" + parseFloat(data.balance).toFixed(2);
+      document.getElementById("studentPendingRequests").textContent =
+        data.pending_requests;
+
+      /* Load photo if available
+      const photo = data.photo
+        ? `uploads/students/${data.photo}`
+        : "uploads/students/default.png";
+      document.getElementById("studentPhoto").src = photo;*/
+    });
+});
+
+function ordinal(n) {
+  const suffix = ["th", "st", "nd", "rd"],
+    v = n % 100;
+  return n + (suffix[(v - 20) % 10] || suffix[v] || suffix[0]);
+}
+

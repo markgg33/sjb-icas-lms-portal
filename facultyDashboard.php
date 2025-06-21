@@ -97,6 +97,43 @@ include "session_check.php";
                 <div class="main-title">
                     <h1>DASHBOARD</h1>
                 </div>
+
+                <div class="main-cards">
+                    <!-- Assigned Subjects -->
+                    <div class="card">
+                        <div class="card-inner">
+                            <i class="fa-solid fa-book"></i>
+                            <p>ASSIGNED SUBJECTS</p>
+                        </div>
+                        <h2 id="assignedSubjectsCount">Loading...</h2>
+                    </div>
+
+                    <!-- Students Handled -->
+                    <div class="card">
+                        <div class="card-inner">
+                            <i class="fa-solid fa-users"></i>
+                            <p>STUDENTS HANDLED</p>
+                        </div>
+                        <h2 id="studentsHandledCount">Loading...</h2>
+                    </div>
+
+                    <!-- Pending Grade Requests -->
+                    <div class="card">
+                        <div class="card-inner">
+                            <i class="fa-solid fa-envelope-open-text"></i>
+                            <p>PENDING GRADE REQUESTS</p>
+                        </div>
+                        <h2 id="pendingFacultyRequestsCount">Loading...</h2>
+                    </div>
+                </div>
+
+                <div class="card mt-4">
+                    <div class="card-body">
+                        <h1>STUDENTS PER SUBJECT</h1>
+                        <canvas id="facultySubjectsChart" height="120"></canvas>
+                    </div>
+                </div>
+
             </div>
 
             <!---SUBJECTS PAGE--->
@@ -176,7 +213,7 @@ include "session_check.php";
                         <input type="hidden" name="id" id="editProfileId" />
 
                         <div class="text-center mb-3">
-                            <img id="editProfilePhotoPreview" src="uploads/students/default.png" class="rounded-circle" width="120" height="120" style="object-fit: cover;" />
+                            <img id="editProfilePhotoPreview" src="uploads/users/default.png" class="rounded-circle" width="120" height="120" style="object-fit: cover;" />
                             <div class="mt-2">
                                 <input type="file" name="photo" id="editProfilePhoto" class="form-control form-control-sm" />
                             </div>
@@ -210,24 +247,7 @@ include "session_check.php";
                                 </div>
                             </div>
                         </div>
-
-                        <!-- Non-editable Fields (Separate Row for Balance) -->
-                        <div class="row g-3 mt-2">
-                            <div class="col-md-4">
-                                <label>School ID</label>
-                                <input type="text" class="form-control" id="editProfileSchoolId" disabled />
-                            </div>
-                            <div class="col-md-4">
-                                <label>Course</label>
-                                <input type="text" class="form-control" id="editProfileCourse" disabled />
-                            </div>
-                            <div class="col-md-4">
-                                <label>Year Level</label>
-                                <input type="text" class="form-control" id="editProfileYear" disabled />
-                            </div>
-                        </div>
-
-
+    
                         <div class="mt-4 d-flex justify-content-end">
                             <button type="submit" class="btn btn-success">💾 Save Changes</button>
                         </div>
@@ -246,15 +266,19 @@ include "session_check.php";
     </div>
 
     <!-- Order is important! -->
-    <script src="javascripts/requests/facultyRequests.js"></script>
-    <script src="javascripts/requests/notifications.js"></script>
+    <script src="javascripts/loadingOverlay.js"></script> <!-- required first -->
     <script src="javascripts/loadFacultySubjects.js"></script> <!-- required first -->
     <script src="javascripts/gradeSubmission.js"></script> <!-- required first -->
-    <script src="javascripts/loadingOverlay.js"></script> <!-- required first -->
+    <script src="javascripts/loadFacultyDashboard.js"></script>
+    <script src="javascripts/loadFacultyProfile.js"></script>
+    <script src="javascripts/requests/facultyRequests.js"></script>
+    <script src="javascripts/requests/notifications.js"></script>
     <script src="javascripts/courseSubject.js"></script>
     <script src="javascripts/sidebar.js"></script>
     <script src="javascripts/togglePassword.js"></script>
 
+    <!---FOR CHART PLUGIN JS--->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <!-- AOS JS -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>

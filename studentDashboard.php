@@ -4,6 +4,7 @@ session_start();
 include "config.php";
 include "session_check.php";
 
+
 ?>
 
 <!DOCTYPE html>
@@ -71,7 +72,7 @@ include "session_check.php";
                         <li class="sidebar-list-item" data-page="dashboard" onclick="changePage('dashboard')">Dashboard</li>
                         <li class="sidebar-list-item" data-page="mySubjects" onclick="changePage('mySubjects')">My Subjects</li>
                         <li class="sidebar-list-item" data-page="myGrades" onclick="changePage('myGrades')">My Grades</li>
-                        
+
 
                     </ul>
                 </li>
@@ -100,6 +101,56 @@ include "session_check.php";
                 <div class="main-title">
                     <h1>DASHBOARD</h1>
                 </div>
+
+                <div class="main-cards">
+                    <!-- Profile Info Card -->
+                    <div class="card">
+                        <div class="card-inner d-flex align-items-center">
+                            <img
+                                src="uploads/students/default.png"
+                                alt="Profile Photo"
+                                id="studentPhoto"
+                                class="rounded-circle me-3"
+                                width="60"
+                                height="60" />
+                            <div>
+                                <h5 id="studentName">Loading...</h5>
+                                <p id="studentCourseYear" class="text-muted mb-0">...</p>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Outstanding Balance -->
+                    <div class="card">
+                        <div class="card-inner">
+                            <i class="fa-solid fa-wallet"></i>
+                            <p>OUTSTANDING BALANCE</p>
+                        </div>
+                        <h2 id="studentBalance">₱0.00</h2>
+                    </div>
+
+                    <!-- Pending Requests -->
+                    <div class="card">
+                        <div class="card-inner">
+                            <i class="fa-solid fa-envelope-open-text"></i>
+                            <p>PENDING REQUESTS</p>
+                        </div>
+                        <h2 id="studentPendingRequests">0</h2>
+                    </div>
+                </div>
+
+                <!---FOR THE BAR GRAPH-->
+                <div class="card mt-4">
+                    <div class="card-body">
+                        <div class="main-title">
+                            <h1>SUBJECT LOAD PER SEMESTER</h1>
+                        </div>
+                        <canvas id="subjectLoadChart" height="120"></canvas>
+                    </div>
+                </div>
+
+
             </div>
 
             <!---SUBJECTS PAGE--->
@@ -236,14 +287,23 @@ include "session_check.php";
         <div class="spinner-border text-light" role="status"></div>
     </div>
 
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            loadStudentDashboard(); // Load info into card without opening edit profile
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <!-- Javascripts here -->
+    <script src="javascripts/loadStudentDashboard.js"></script>
     <script src="javascripts/loadingOverlay.js"></script> <!-- required first -->
+    <script src="javascripts/requests/studentDashboard.js"></script>
     <script src="javascripts/loadStudentProfile.js"></script>
     <script src="javascripts/courseSubject.js"></script>
     <script src="javascripts/sidebar.js"></script>
     <script src="javascripts/togglePassword.js"></script>
     <script src="javascripts/requests/notifications.js"></script>
-    <script src="javascripts/requests/studentDashboard.js"></script>
 
     <!-- Requests JS -->
 

@@ -47,7 +47,8 @@ $stmt->bind_result($total);
 $stmt->fetch();
 $stmt->close();
 
-$stmt = $conn->prepare("SELECT type, status, created_at FROM requests WHERE student_id=? ORDER BY created_at DESC LIMIT ?,?");
+//$stmt = $conn->prepare("SELECT type, status, created_at FROM requests WHERE student_id=? ORDER BY created_at DESC LIMIT ?,?");
+$stmt = $conn->prepare("SELECT type, status, created_at, attachment FROM requests WHERE student_id=? ORDER BY created_at DESC LIMIT ?,?");
 $stmt->bind_param("iii", $student_id, $offset, $limit);
 $stmt->execute();
 $result = $stmt->get_result();

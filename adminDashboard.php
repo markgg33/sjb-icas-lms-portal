@@ -142,7 +142,35 @@ include "session_check.php";
                         </div>
                         <h2 id="coursesCount">Loading...</h2>
                     </div>
+                    <!-- PENDING REQUESTS -->
+                    <div class="card">
+                        <div class="card-inner">
+                            <i class="fa-solid fa-envelope-open-text"></i>
+                            <p>PENDING REQUESTS</p>
+                        </div>
+                        <h2 id="pendingRequestsCount">Loading...</h2>
+                    </div>
+
+                    <!-- ASSIGNED FACULTY -->
+                    <div class="card">
+                        <div class="card-inner">
+                            <i class="fa-solid fa-user-tie"></i>
+                            <p>FACULTY W/ ASSIGNMENTS</p>
+                        </div>
+                        <h2 id="assignedFacultyCount">Loading...</h2>
+                    </div>
                 </div>
+
+                <div class="card mt-4">
+                    <div class="card-body">
+                        <div class="main-title">
+                            <h1>STUDENTS PER COURSE & YEAR LEVEL</h1>
+                            <br>
+                        </div>
+                        <canvas id="studentsPerCourseChart" height="120"></canvas>
+                    </div>
+                </div>
+
 
             </div>
 
@@ -224,6 +252,7 @@ include "session_check.php";
                             <th>Type</th>
                             <th>Description</th>
                             <th>Status</th>
+                            <th>Attachment</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -647,6 +676,7 @@ include "session_check.php";
     <?php include "modals/successModal.php" ?>
 
     <!---FOR SUBJECT MANAGEMENT JS--->
+    <script src="javascripts/requests/approveUpload.js"></script>
     <script src="javascripts/editFacultySubjects.js"></script>
     <script src="javascripts/loadingOverlay.js"></script>
     <script src="javascripts/courseSubject.js"></script>
@@ -659,8 +689,10 @@ include "session_check.php";
     <script src="javascripts/assignFacultySubjects.js"></script>
     <script src="javascripts/requests/adminRequests.js"></script>
     <script src="javascripts/requests/notifications.js"></script>
-    
 
+
+    <!---FOR CHART PLUGIN JS--->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <!-- AOS JS -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>

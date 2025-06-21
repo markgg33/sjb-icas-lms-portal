@@ -113,7 +113,7 @@
                 </div>
                 <div class="mb-3"></div>
                 <div class="register-btn-container">
-                    <a href="login_page.php">Already have an account? Login now!</a>
+                    <p>Already have an account?<a href="login_page.php"> Login now!</a></p>
                     <div class="mb-3"></div>
                     <button type="submit" class="btn-enroll"><i class="fa-solid fa-clipboard-check"></i>Enroll Student</button>
                 </div>

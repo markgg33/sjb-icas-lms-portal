@@ -27,9 +27,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-//FOR CHART
+//FOR BAR GRAPH (WORKING)
 
-function loadStudentsPerCourseChart() {
+/*function loadStudentsPerCourseChart() {
   fetch("get_students_per_course_year.php")
     .then((res) => res.json())
     .then((data) => {
@@ -82,5 +82,107 @@ function loadStudentsPerCourseChart() {
       });
     });
 }
+
+document.addEventListener("DOMContentLoaded", loadStudentsPerCourseChart);*/
+
+let studentsChartInstance = null;
+
+function loadStudentsPerCourseChart() {
+  if (studentsChartInstance) {
+    studentsChartInstance.destroy();
+  }
+
+  fetch("get_students_per_course_year.php")
+    .then((res) => res.json())
+    .then((data) => {
+      const labels = data.map((item) => item.label);
+      const counts = data.map((item) => item.count);
+
+      const ctx = document
+        .getElementById("studentsPerCourseChart")
+        .getContext("2d");
+
+      studentsChartInstance = new Chart(ctx, {
+        type: "pie",
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: "Number of Students",
+              data: counts,
+              backgroundColor: generateColors(labels.length),
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            tooltip: {
+              callbacks: {
+                label: (ctx) => `${ctx.label}: ${ctx.parsed} students`,
+              },
+            },
+            legend: {
+              display: false, // Hide built-in legend
+            },
+          },
+        },
+        plugins: [generateCustomLegend],
+      });
+    });
+}
+
+function generateColors(length) {
+  const palette = [
+    "#4dc9f6",
+    "#f67019",
+    "#f53794",
+    "#537bc4",
+    "#acc236",
+    "#166a8f",
+    "#00a950",
+    "#58595b",
+    "#8549ba",
+    "#ffc107",
+    "#36a2eb",
+    "#ff6384",
+  ];
+  return Array.from({ length }, (_, i) => palette[i % palette.length]);
+}
+
+// Custom legend plugin for cleaner design
+const generateCustomLegend = {
+  id: "custom_legend",
+  afterUpdate(chart) {
+    const legendContainer = document.getElementById("chartLegend");
+    const labels = chart.data.labels;
+    const bgColors = chart.data.datasets[0].backgroundColor;
+
+    legendContainer.innerHTML = labels
+      .map(
+        (label, i) => `
+      <span style="
+        display: inline-flex;
+        align-items: center;
+        margin: 5px 10px;
+        white-space: nowrap;
+      ">
+        <span style="
+          display: inline-block;
+          width: 12px;
+          height: 12px;
+          background-color: ${bgColors[i]};
+          border-radius: 50%;
+          margin-right: 8px;
+        "></span>
+        ${label}
+      </span>
+    `
+      )
+      .join("");
+  },
+};
 
 document.addEventListener("DOMContentLoaded", loadStudentsPerCourseChart);

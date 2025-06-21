@@ -36,6 +36,10 @@ function changePage(page) {
   if (page === "editFacultyProfile") {
     loadFacultyProfile();
   }
+
+  if (page === "dashboard") {
+    loadStudentsPerCourseChart();
+  }
 }
 
 // Set the default page to be the dashboard page
@@ -55,6 +59,31 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // Add the "active" class to the clicked sidebar item
       this.classList.add("active");
+    });
+  });
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  const sidebar = document.getElementById("sidebar");
+  const toggleBtn = document.getElementById("sidebarToggle");
+
+  if (toggleBtn && sidebar) {
+    toggleBtn.addEventListener("click", () => {
+      sidebar.classList.toggle("show-sidebar");
+    });
+  }
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  const sidebar = document.getElementById("sidebar");
+  const sidebarItems = document.querySelectorAll(".sidebar-list-item");
+
+  sidebarItems.forEach((item) => {
+    item.addEventListener("click", function () {
+      // Only close the sidebar if it's in mobile mode (shown with show-sidebar class)
+      if (sidebar.classList.contains("show-sidebar")) {
+        sidebar.classList.remove("show-sidebar");
+      }
     });
   });
 });

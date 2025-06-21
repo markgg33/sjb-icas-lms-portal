@@ -19,7 +19,7 @@ include "session_check.php";
     <link rel="icon" type="image/x-icon" href="images/sjb-logo.ico">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Madimi+One&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/new_styles.css">
 </head>
 
 <body>
@@ -28,9 +28,10 @@ include "session_check.php";
         <!-----HEADER------>
 
         <header class="header">
-            <div class="info-title">
-                Welcome, <?= htmlspecialchars($_SESSION['name']) ?>
-            </div>
+            <button id="sidebarToggle" class="btn-items d-lg-none" aria-label="Toggle Sidebar">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="flex-grow-1"></div> <!---placeholder to push the list to the right--->
             <ul class="header-list">
                 <li class="nav-item dropdown">
                     <a class="btn-items nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -55,6 +56,9 @@ include "session_check.php";
 
             <div class="sidebar-logo">
                 <img src="css/sjb-logo.png" alt="Sidebar Logo of school here" height="150px">
+            </div>
+            <div class="info-title text-center mb-3">
+                Welcome, <?= htmlspecialchars($_SESSION['name']) ?>
             </div>
             <br>
             <ul class="sidebar-list">
@@ -247,7 +251,7 @@ include "session_check.php";
                                 </div>
                             </div>
                         </div>
-    
+
                         <div class="mt-4 d-flex justify-content-end">
                             <button type="submit" class="btn btn-success">💾 Save Changes</button>
                         </div>

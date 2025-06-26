@@ -1,4 +1,4 @@
-// studentSearch.js
+// studentSearch.js FOR ENROLL SUBJECTS TO STUDENT
 
 // Debounce function to avoid too many AJAX calls
 function debounce(func, wait) {
@@ -47,7 +47,8 @@ $(function () {
     });
   });
 
-  function renderStudentResults(students) {
+  //WORKING VERSION OF RENDERING TABLE
+  /*function renderStudentResults(students) {
     if (students.length === 0) {
       $("#studentSearchResults").html("<p>No students found.</p>");
       return;
@@ -66,6 +67,36 @@ $(function () {
              </tr>`;
     });
     html += "</tbody></table>";
+
+    $("#studentSearchResults").html(html);
+  }*/
+
+  function renderStudentResults(students) {
+    if (students.length === 0) {
+      $("#studentSearchResults").html("<p>No students found.</p>");
+      return;
+    }
+
+    let html = '<div class="table-responsive">';
+    html += '<table class="table table-bordered align-middle">';
+    html +=
+      "<thead><tr><th>ID</th><th>Name</th><th>Course</th><th>Year Level</th><th>Select</th></tr></thead><tbody>";
+    students.forEach((s) => {
+      html += `<tr>
+               <td>${s.school_id}</td>
+               <td>${s.full_name}</td>
+               <td>${s.course_name}</td>
+               <td>${s.year_level}</td>
+               <td>
+                 <button class="btn btn-sm btn-primary select-student-btn" 
+                         data-id="${s.id}" 
+                         data-name="${s.full_name}">
+                   Select
+                 </button>
+               </td>
+             </tr>`;
+    });
+    html += "</tbody></table></div>";
 
     $("#studentSearchResults").html(html);
   }

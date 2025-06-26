@@ -1,3 +1,5 @@
+//EDIT SUBJECTS PAGE
+
 async function loadFacultyDropdown() {
   const res = await fetch("get_faculty_list.php");
   const data = await res.json();
@@ -40,7 +42,7 @@ async function loadFacultySubjectsById(facultyId) {
                             <strong>${s.code}</strong> - ${s.name}
                             <div class="text-muted small">${s.course_name} (${s.school_year})</div>
                           </div>
-                          <button class="btn btn-sm btn-danger" onclick="removeFacultySubject(${s.assignment_id})">🗑 Remove</button>
+                          <button class="btn btn-sm btn-danger" onclick="removeFacultySubject(${s.assignment_id})">Remove</button>
                         </li>`
                 )
                 .join("")}

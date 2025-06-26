@@ -20,8 +20,12 @@ $delete = $conn->prepare("DELETE FROM enrolled_subjects WHERE student_id = ? AND
 $delete->bind_param("iii", $student_id, $subject_id, $semester);
 $delete->execute();
 
-// Update the student's balance
-$update = $conn->prepare("UPDATE students SET balance = balance - ? WHERE id = ?");
+// Update the student's balance — but prevent negative values
+$update = $conn->prepare("
+    UPDATE students 
+    SET balance = GREATEST(balance - ?, 0) 
+    WHERE id = ?
+");
 $update->bind_param("di", $cost, $student_id);
 $update->execute();
 

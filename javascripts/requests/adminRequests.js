@@ -1,4 +1,5 @@
-async function loadAdminRequests() {
+//WORKING VERSION
+/*async function loadAdminRequests() {
   const res = await fetch("admin_get_requests.php");
   const list = await res.json();
   let html = "";
@@ -29,6 +30,52 @@ async function loadAdminRequests() {
       }
     </td>
   </tr>`;
+  });
+
+  $("#adminRequestsTable tbody").html(html);
+}*/
+
+async function loadAdminRequests() {
+  const res = await fetch("admin_get_requests.php");
+  const list = await res.json();
+  let html = "";
+
+  list.forEach((r) => {
+    let statusBadge = "";
+    if (r.status === "Approved") {
+      statusBadge = '<span class="badge bg-success">Approved</span>';
+    } else if (r.status === "Rejected") {
+      statusBadge = '<span class="badge bg-danger">Rejected</span>';
+    } else {
+      statusBadge = '<span class="badge bg-warning text-dark">Pending</span>';
+    }
+
+    html += `<tr>
+      <td>${r.id}</td>
+      <td>${r.student_name}</td>
+      <td>${r.type}</td>
+      <td>${r.description}</td>
+      <td>${statusBadge}</td>
+      <td>
+        ${
+          r.attachment
+            ? `<a href="${r.attachment}" target="_blank" class="btn btn-sm btn-primary">📎 View File</a>`
+            : `<span class="text-muted">—</span>`
+        }
+      </td>
+      <td>
+        ${
+          r.status === "Pending"
+            ? `
+          <form class="d-flex flex-column gap-1" onsubmit="return submitApprovalWithFile(event, ${r.id})" enctype="multipart/form-data">
+            <input type="file" name="attachment" accept=".pdf,.doc,.docx" class="form-control form-control-sm" required>
+            <button type="submit" class="btn btn-sm btn-success">Approve</button>
+          </form>
+          <button class="btn btn-sm btn-danger mt-1" onclick="rejectRequest(${r.id})">Reject</button>`
+            : `<span class="text-muted">—</span>`
+        }
+      </td>
+    </tr>`;
   });
 
   $("#adminRequestsTable tbody").html(html);

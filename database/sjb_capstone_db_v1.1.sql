@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 20, 2025 at 10:03 AM
+-- Generation Time: Jun 26, 2025 at 05:38 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -91,8 +91,8 @@ CREATE TABLE `enrolled_subjects` (
 --
 
 INSERT INTO `enrolled_subjects` (`id`, `student_id`, `subject_id`, `semester`, `school_year`, `date_enrolled`) VALUES
-(32, 1, 21, '3', '2025-2026', '2025-06-16 10:42:58'),
-(33, 1, 24, '3', '2025-2026', '2025-06-16 10:42:58');
+(43, 1, 21, '3', '2025-2026', '2025-06-25 10:29:12'),
+(44, 1, 24, '3', '2025-2026', '2025-06-25 10:29:12');
 
 -- --------------------------------------------------------
 
@@ -199,7 +199,14 @@ INSERT INTO `notifications` (`id`, `user_id`, `from_user_id`, `type`, `message`,
 (37, 2, 1, 'Good Moral', 'New `Good Moral` request from student #1', 'adminDashboard.php#requests-page', 1, '2025-06-19 02:55:28', 'admin'),
 (38, 1, 2, 'Good Moral', 'Your `Good Moral` request has been approved with an attachment.', 'studentDashboard.php#requests-page', 1, '2025-06-19 03:18:28', 'student'),
 (39, 2, 1, 'TOR', 'New `TOR` request from student #1', 'adminDashboard.php#requests-page', 1, '2025-06-19 03:39:55', 'admin'),
-(40, 1, 2, 'TOR', 'Your `TOR` request has been approved with an attachment.', 'studentDashboard.php#requests-page', 1, '2025-06-19 03:40:41', 'student');
+(40, 1, 2, 'TOR', 'Your `TOR` request has been approved with an attachment.', 'studentDashboard.php#requests-page', 1, '2025-06-19 03:40:41', 'student'),
+(41, 2, 1, 'TOR', 'New `TOR` request from student #1', 'adminDashboard.php#requests-page', 1, '2025-06-20 18:08:10', 'admin'),
+(42, 1, 2, 'TOR', 'Your `TOR` request has been approved with an attachment.', 'studentDashboard.php#requests-page', 1, '2025-06-20 18:24:45', 'student'),
+(43, 2, 1, 'Diploma', 'New `Diploma` request from student #1', 'adminDashboard.php#requests-page', 1, '2025-06-20 18:24:57', 'admin'),
+(44, 3, 1, 'Grades', 'New `Grades` request from student #1', 'facultyDashboard.php#requests-page', 1, '2025-06-20 18:44:12', 'faculty'),
+(45, 1, 3, 'Grades', 'Your `Grades` request has been Rejected.', 'studentDashboard.php#requests-page', 1, '2025-06-20 18:44:41', 'student'),
+(46, 1, 3, 'Grades', 'Your `Grades` request has been Rejected.', 'studentDashboard.php#requests-page', 1, '2025-06-20 18:46:30', 'student'),
+(47, 1, 2, 'Diploma', 'Your `Diploma` request has been rejected.', 'studentDashboard.php#requests-page', 1, '2025-06-20 18:49:18', 'student');
 
 -- --------------------------------------------------------
 
@@ -228,9 +235,12 @@ INSERT INTO `requests` (`id`, `student_id`, `type`, `description`, `status`, `cr
 (1, 1, 'Grades', 'Requesting for a Grade change in CAP102 Subject', 'Approved', '2025-06-16 23:24:12', '2025-06-16 23:24:38', NULL, 3, NULL),
 (2, 1, 'TOR', 'Requesting TOR', 'Approved', '2025-06-16 23:25:07', NULL, NULL, 0, NULL),
 (3, 1, 'TOR', 'REQUEST FOR TOR', 'Rejected', '2025-06-17 01:20:55', NULL, NULL, 0, NULL),
-(4, 1, 'Grades', '', 'Pending', '2025-06-18 06:39:18', NULL, NULL, 3, NULL),
+(4, 1, 'Grades', '', 'Rejected', '2025-06-18 06:39:18', '2025-06-20 18:44:41', NULL, 3, NULL),
 (5, 1, 'Good Moral', 'sample request for good moral', 'Approved', '2025-06-19 02:55:28', NULL, NULL, 0, 'uploads/requests/1750303108_Monthly_Summary_2025-06_Mark_Francis_P._De_Guzman (1).pdf'),
-(6, 1, 'TOR', '', 'Approved', '2025-06-19 03:39:55', NULL, NULL, 0, 'uploads/requests/1750304441_Project Proposal.pdf');
+(6, 1, 'TOR', '', 'Approved', '2025-06-19 03:39:55', NULL, NULL, 0, 'uploads/requests/1750304441_Project Proposal.pdf'),
+(7, 1, 'TOR', '', 'Approved', '2025-06-20 18:08:10', NULL, NULL, 0, 'uploads/requests/1750443885_Monthly_Summary_2025-06_Mark_Francis_P._De_Guzman (1).pdf'),
+(8, 1, 'Diploma', '', 'Rejected', '2025-06-20 18:24:57', NULL, 2, 0, NULL),
+(9, 1, 'Grades', '', 'Rejected', '2025-06-20 18:44:12', '2025-06-20 18:46:30', NULL, 3, NULL);
 
 -- --------------------------------------------------------
 
@@ -259,7 +269,7 @@ CREATE TABLE `students` (
 --
 
 INSERT INTO `students` (`id`, `school_id`, `first_name`, `middle_name`, `last_name`, `email`, `password`, `course_id`, `year_level`, `dob`, `photo`, `created_at`, `balance`) VALUES
-(1, 'SJB-2025-0001', 'Mark Francis', 'Perez', 'De Guzman', 'deguzmanmarkfrancisp@gmail.com', '$2y$10$W7ECe9jHimSxPo3jBQY0zO.BLyacinauQQqBOenb9TXm4GhElggvC', 3, 3, '1997-12-10', 'uploads/students/1750162154_student.nef', '2025-05-21 22:57:39', 1920.00),
+(1, 'SJB-2025-0001', 'Mark Francis', 'Perez', 'De Guzman', 'deguzmanmarkfrancisp@gmail.com', '$2y$10$W7ECe9jHimSxPo3jBQY0zO.BLyacinauQQqBOenb9TXm4GhElggvC', 3, 3, '1997-12-10', 'uploads/students/1750162154_student.nef', '2025-05-21 22:57:39', 4420.00),
 (2, 'SJB-2025-0002', 'Joeanalyn', 'Diaz', 'Grande', 'joeanalyn07@gmail.com', '$2y$10$M0ZYQAzfBwZWkSObL89Ml.WmTHEnQM083i0pcMGS3y4x/WxyjHJQu', 4, 3, '1999-06-12', 'uploads/students/1749104064_student.nef', '2025-05-23 18:55:11', 0.00),
 (5, 'SJB-2025-0003', 'Rainn', 'Perez', 'De Guzman', 'rainnrainndg@gmail.com', '$2y$10$DAWpD6YIsyENM6f3LQlzfO0A1rPk1Q2hAHMIS6BGJ3Acno8CEIPXy', 5, 1, '2017-10-02', 'uploads/students/1748186435_SJB_logo.png', '2025-05-25 23:20:35', 0.00),
 (6, 'SJB-2025-0006', 'Mara Francheska', 'Perez', 'De Guzman', 'thekaisooshipper@gmail.com', '$2y$10$0El2peJD53KI/4ZNs/hVwe7ykpHUT81fXOl8DYm3hNaWyARiaG0me', 4, 3, '1996-07-28', 'uploads/students/1750144148_student.png', '2025-06-17 14:59:58', 0.00);
@@ -414,7 +424,7 @@ ALTER TABLE `course_subjects`
 -- AUTO_INCREMENT for table `enrolled_subjects`
 --
 ALTER TABLE `enrolled_subjects`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `faculty_subjects`
@@ -432,13 +442,13 @@ ALTER TABLE `grades`
 -- AUTO_INCREMENT for table `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- AUTO_INCREMENT for table `requests`
 --
 ALTER TABLE `requests`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `students`

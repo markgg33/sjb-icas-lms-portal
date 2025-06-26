@@ -186,3 +186,5 @@ const generateCustomLegend = {
 };
 
 document.addEventListener("DOMContentLoaded", loadStudentsPerCourseChart);
+
+

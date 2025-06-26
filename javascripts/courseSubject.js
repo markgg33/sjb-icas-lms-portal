@@ -134,14 +134,15 @@ $(document).ready(function () {
   // ================================
   $("#addMoreSubject").click(function () {
     const html = `
-  <div class="row subject-group-creation mt-2">
-    <div class="col-3">
+    <br>
+  <div class="row subject-group-creation g-2">
+    <div class="col-md-3 col-12">
       <input type="text" name="subject_codes[]" class="form-control" placeholder="Subject Code" required>
     </div>
-    <div class="col-3">
+    <div class="col-md-3 col-12">
       <input type="text" name="subject_names[]" class="form-control" placeholder="Subject Name" required>
     </div>
-    <div class="col-3">
+    <div class="col-md-3 col-12">
       <select name="subject_semesters[]" class="form-control" required>
         <option value="">Select Semester</option>
         <option value="1">1st Sem</option>
@@ -149,10 +150,10 @@ $(document).ready(function () {
         <option value="3">3rd Sem</option>
       </select>
     </div>
-    <div class="col-2">
+    <div class="col-md-2 col-12">
       <input type="number" name="subject_units[]" class="form-control" placeholder="Units" min="2" max="9" required>
     </div>
-    <div class="col">
+    <div class="col-md-2 col-12">
       <button type="button" class="btn btn-danger removeSubject"><i class="fa-solid fa-trash"></i></button>
     </div>
   </div>
@@ -293,6 +294,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <tr>
                   <th>Subject Code</th>
                   <th>Subject Name</th>
+                  <th>Semester</th>
                   <th>Date Enrolled</th>
                 </tr>
               </thead>
@@ -303,6 +305,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     <tr>
                       <td>${sub.code}</td>
                       <td>${sub.name}</td>
+                      <td>${sub.semester}</td>
                       <td>${sub.date_enrolled}</td>
                     </tr>
                   `
@@ -442,7 +445,7 @@ document.getElementById("addUserForm").addEventListener("submit", function (e) {
     });
 });
 
-//LOAD USERS INTO TABLE
+//LOAD USERS INTO TABLE FOR ALL USERS
 
 function loadUsers() {
   fetch("get_users.php")
@@ -463,14 +466,14 @@ function loadUsers() {
   <td>${user.email}</td>
   <td>${user.role}</td>
   <td>
-   <button class="btn btn-sm btn-warning me-2" onclick="editUser(${user.id}, '${
+   <button class="btn btn-sm btn-success me-2" onclick="editUser(${user.id}, '${
           user.first_name
         }', '${user.middle_name}', '${user.last_name}', '${user.gender}', '${
           user.email
-        }', '${user.role}', '${user.photo || ""}')">✏️ Edit</button>
+        }', '${user.role}', '${user.photo || ""}')"><i class="fa-solid fa-pen"></i></button>
     <button class="btn btn-sm btn-danger" onclick="deleteUser(${
       user.id
-    })">🗑️ Delete</button>
+    })"><i class="fa-solid fa-trash"></i></button>
   </td>
 `;
         tbody.appendChild(row);
@@ -586,8 +589,8 @@ $(document).ready(function () {
                   sub.subject_name ?? sub.name
                 }"></td>
                 <td>
-                  <button class="btn btn-success save-subject">Save</button>
-                  <button class="btn btn-danger delete-subject">Delete</button>
+                  <button class="btn btn-success save-subject"><i class="fa-solid fa-pen"></i></button>
+                  <button class="btn btn-danger delete-subject"><i class="fa-solid fa-trash"></i></button>
                 </td>
               </tr>
             `
@@ -801,8 +804,8 @@ function loadCoursesToFilter() {
   });
 }
 
-// Load students by filters
-function loadStudents(page = 1) {
+// Load students by filters WORKING (FOR STUDENT LIST PAGE)
+/*function loadStudents(page = 1) {
   const search = $("#studentSearchInput").val();
   const courseId = $("#courseFilter").val();
 
@@ -890,10 +893,119 @@ function loadStudents(page = 1) {
   ).always(() => {
     setTimeout(() => hideLoading(), 300); // Delay for better UX
   });
+}*/
+
+//(FOR STUDENT LIST PAGE)
+
+function loadStudents(page = 1) {
+  const search = $("#studentSearchInput").val().trim();
+  const courseId = $("#courseFilter").val();
+
+  console.log("Running loadStudents with:", { search, courseId });
+
+  // If both filters are empty, hide the table
+  if (!search && !courseId) {
+    $("#studentTableWrapper").hide();
+    $("#studentTableContainer").empty();
+    $("#paginationContainer").empty();
+    return;
+  }
+
+  showLoading();
+
+  $.get(
+    "get_filtered_students.php",
+    {
+      search: search,
+      course_id: courseId,
+      page: page,
+    },
+    function (res) {
+      const data = JSON.parse(res);
+      const students = data.students;
+      const total = data.total;
+      const limit = data.limit;
+      const currentPage = data.page;
+
+      let tableHtml = `
+      <br>
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover align-middle text-nowrap">
+            <thead class="table-light">
+              <tr>
+                <th>Photo</th>
+                <th>Full Name</th>
+                <th>Email</th>
+                <th>Course</th>
+                <th>Year Level</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${
+                students.length > 0
+                  ? students
+                      .map(
+                        (s) => `
+<tr>
+  <td><img src="${
+    s.photo || "uploads/students/default.png"
+  }" width="50" height="50" class="rounded-circle" style="object-fit: cover;"></td>
+  <td>${s.full_name}</td>
+  <td>${s.email}</td>
+  <td>${s.course}</td>
+  <td>Year ${s.year_level}</td>
+  <td>
+    <button class="btn btn-sm btn-success edit-student-btn" data-id="${s.id}">
+      <i class="fa-solid fa-pen"></i>
+    </button>
+    <button class="btn btn-sm btn-danger delete-student-btn" data-id="${s.id}">
+      <i class="fa-solid fa-trash"></i>
+    </button>
+  </td>
+</tr>`
+                      )
+                      .join("")
+                  : '<tr><td colspan="6" class="text-center">No students found.</td></tr>'
+              }
+            </tbody>
+          </table>
+        </div>
+      `;
+
+      $("#studentTableContainer").html(tableHtml);
+
+      // Pagination
+      const totalPages = Math.ceil(total / limit);
+      let paginationHtml =
+        '<nav><ul class="pagination justify-content-center">';
+
+      for (let i = 1; i <= totalPages; i++) {
+        paginationHtml += `
+          <li class="page-item ${i === currentPage ? "active" : ""}">
+            <button class="page-link" onclick="loadStudents(${i})">${i}</button>
+          </li>
+        `;
+      }
+
+      paginationHtml += "</ul></nav>";
+      $("#paginationContainer").html(paginationHtml);
+
+      // ✅ Show table only after data is loaded
+      $("#studentTableWrapper").fadeIn();
+    }
+  ).always(() => {
+    setTimeout(() => hideLoading(), 300);
+  });
 }
 
 // When search button is clicked
 $("#searchStudentBtn").click(function () {
+  loadStudents(1);
+});
+
+// When search button is clicked (for courses)
+$("#searchByCourseBtn").on("click", function () {
   loadStudents(1);
 });
 
@@ -902,11 +1014,14 @@ $("#studentSearchInput").on("keypress", function (e) {
   if (e.which === 13) $("#searchStudentBtn").click();
 });
 
-// Clear search and filter
-$("#clearStudentFilters").click(function () {
+// ✅ RECOMMENDED VERSION CLEAR STUDENT
+$("#clearStudentFilters").on("click", function () {
   $("#studentSearchInput").val("");
   $("#courseFilter").val("");
-  loadStudents(1);
+
+  $("#studentTableWrapper").hide(); // Hide the wrapper
+  $("#studentTableContainer").empty(); // Remove table content
+  $("#paginationContainer").empty(); // Remove pagination
 });
 
 //EDIT DELETE BUTTONS FOR STUDENT LIST / MODAL

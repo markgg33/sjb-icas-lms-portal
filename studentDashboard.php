@@ -145,12 +145,15 @@ include "session_check.php";
                 </div>
 
                 <!---FOR THE BAR GRAPH-->
-                <div class="card mt-4">
-                    <div class="card-body">
+                <div class="card mt-4 shadow-sm rounded" style="overflow: hidden;">
+                    <div class="card-body p-4">
                         <div class="main-title">
-                            <h1>SUBJECT LOAD PER SEMESTER</h1>
+                            <h1>SUBJECTS PER SEMESTER</h1>
                         </div>
-                        <canvas id="subjectLoadChart" height="120"></canvas>
+                        <div style="position: relative; height: 400px; width: 100%;">
+                            <canvas id="subjectLoadChart"></canvas>
+                        </div>
+                        <div id="chartLegend" class="mt-3 text-center small"></div>
                     </div>
                 </div>
 

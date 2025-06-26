@@ -1,3 +1,4 @@
+//THIS FUNCTION IS FOR THE EDIT STUDENTS PAGE
 let selectedStudentId = null;
 
 document.getElementById("searchBtn").addEventListener("click", () => {
@@ -55,6 +56,9 @@ function loadStudentDetails(student) {
   })
     .then((res) => res.json())
     .then((data) => {
+      const balance = parseFloat(data.balance ?? 0);
+      document.getElementById("balanceInput").value = balance.toFixed(2);
+
       const tableBody = document.querySelector("#subjectTable tbody");
       tableBody.innerHTML = "";
 
@@ -119,13 +123,6 @@ function loadStudentDetails(student) {
       });
 
       setTimeout(() => hideLoading(), 500);
-    });
-
-  // Load balance
-  fetch(`get_balance.php?student_id=${selectedStudentId}`)
-    .then((res) => res.json())
-    .then((data) => {
-      document.getElementById("balanceInput").value = data.balance ?? 0;
     });
 }
 
